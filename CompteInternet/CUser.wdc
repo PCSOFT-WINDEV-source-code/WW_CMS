@@ -1,0 +1,381 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : CUser
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x175034b414ffbdfc
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      CUser is Class
+      	m_nUserAccountID is 8-byte int <mapping=UserAccountID>
+      	m_sEmail is string <mapping=Email>
+      	m_sDisplayName is string <mapping=DisplayName>
+      	m_sLastNameFirstName is string <mapping=LastNameFirstName>
+      	m_bEnabledAccount is boolean <mapping=EnabledAccount>
+      	m_nPhotoID is 8-byte int <mapping=PhotoID>
+      	m_sDescription is string <mapping=Description>
+      PROTECTED	
+      	m_sPassword is string <mapping=Password>
+      	
+      	m_nLockedRecNum is 8-byte int
+      END
+     type : 131072
+  procedures :
+   -
+     name : Manufacturer
+     procedure_id : 1679900609060388348
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructor()
+      
+      m_nLockedRecNum = -1
+     type : 589824
+   -
+     name : Destructor_
+     procedure_id : 1679900609060453884
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructor()
+      
+      IF m_nLockedRecNum>0 THEN
+      	HUnlockRecNum(UserAccount,m_nLockedRecNum)
+      END
+     type : 655360
+   -
+     name : bLoadInfo
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1679900609060519420
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bLoadInfo (<nUserID> is 8-byte int [, <nLock> is int])
+      //
+      // Parameters:
+      //	nUserID (8-byte integer): <specify the role of nAuthorID>
+      //	nLock (integer - default value=8): <specify the role of bLockWriting>
+      // Return value:
+      // 	boolean: // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE bLoadInfo( nUserID is 8-byte int, nLock is int = hLockNo )
+      
+      IF HReadSeekFirst(UserAccount,UserAccountID,nUserID,nLock) THEN
+      	FileToMemory(object,UserAccount)
+      	RESULT True
+      END
+      
+      RESULT False
+      
+      CASE Error:
+      	ErrorPropagate()
+      	
+     type : 458752
+   -
+     name : bOwnsRights
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1679900609060584956
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bHasRights (<sRightsName> is string, <sRightsParam> is string)
+      //
+      // Parameters:
+      //	sRightsName (string): <specify the role of sRightsName>
+      //	sRightsParam (string): <specify the role of sRightsParam>
+      // Return value:
+      // 	Undefined type: // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE bOwnsRights( LOCAL sRightsName is string, LOCAL sParamRights is string )
+      
+      // Finds the rights
+      IF COL_ManageAccount.gaaRight[sRightsName]..Empty THEN
+      	ErrorThrow(1,"The requested rights do not exist")
+      	RESULT False
+      END
+      
+      IF HReadSeekFirst(RightsAccount,FullUserRightsID,[sRightsName,sParamRights,m_nUserAccountID])=False THEN
+      	RESULT False
+      END
+      
+      RESULT RightsAccount.Value
+      
+      CASE Error:
+      ErrorPropagate()
+     type : 458752
+   -
+     name : DeleteUser
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1679900609060650492
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //DeleteUser ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE DeleteUser()
+      
+      IF UserAccount.UserAccountID<>m_nUserAccountID THEN
+      	IF HSeekFirst(UserAccount,UserAccountID,m_nUserAccountID,hLockWrite)=False THEN
+      		ErrorThrow(1,"The user does not exist")
+      		RETURN
+      	END
+      END
+      
+      HDelete(UserAccount)
+      
+      CASE Error:
+      ErrorPropagate()
+     type : 458752
+   -
+     name : Lock
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1679900609060716028
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //Lock ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE Lock()
+      
+      HReadSeekFirst(UserAccount,UserAccountID,m_nUserAccountID,hLockWrite)
+      m_nLockedRecNum = HRecNum(UserAccount)
+      
+      CASE Error:
+      	ErrorPropagate()
+      	
+     type : 458752
+   -
+     name : Saves
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1679900609060781564
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //Saves ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE Saves()
+      
+      IF m_nUserAccountID=0 THEN
+      	HReset(UserAccount)
+      END
+      
+      MemoryToFile(object,UserAccount)
+      
+      IF m_nUserAccountID=0 THEN
+      	HAdd(UserAccount)
+      	m_nUserAccountID = UserAccount.UserAccountID
+      ELSE
+      	HModify(UserAccount)
+      END
+      
+      CASE Error:
+      	ErrorPropagate()
+      	
+     type : 458752
+   -
+     name : ChangeRights
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1679900609060847100
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] ChangeRights (<sRightsName> is string, <sRightsParam> is string, <nRightsValue> is int)
+      //
+      // Parameters:
+      //	sRightsName (string): <specify the role of sRightsName>
+      //	sRightsParam (string): <specify the role of sRightsParam>
+      //	nRightsValue (integer):<specify the role of nRightsValue>
+      // Return value:
+      // 	boolean: // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE ChangeRights( LOCAL sRightsName is string , LOCAL sParamRights is string , LOCAL nRightsValue is int )
+      
+      // Finds and locks the rights to modify
+      IF HReadSeekFirst(RightsAccount,FullUserRightsID,[sRightsName,sParamRights,m_nUserAccountID],hLockWrite) THEN
+      	RightsAccount.Value = nRightsValue
+      	RESULT HModify(RightsAccount)
+      END
+      
+      // The rights do not exist, create them
+      RightsAccount.UserAccountID = m_nUserAccountID
+      RightsAccount.RightsName = sRightsName
+      RightsAccount.RightsParam = sParamRights
+      RightsAccount.Value = nRightsValue
+      
+      RESULT HAdd(RightsAccount)
+      
+      CASE Error:
+      ErrorPropagate()
+     type : 458752
+   -
+     name : bCheckPassword
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1679900609060912636
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bCheckPassword (<sPassword> is string)
+      //
+      // Parameters:
+      //	sPassword (string): <specify the role of sPassword>
+      // Return value:
+      // 	boolean: // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE bCheckPassword( LOCAL sPassword is string )
+      
+      sHashPwd is string = sHashPassword(sPassword)
+      
+      RESULT m_sPassword=sHashPwd
+      
+      CASE Error:
+      	ErrorPropagate()
+      	RESULT False
+     type : 458752
+   -
+     name : s_clConnect
+     internal_properties : CAAAAAgAAAAeru7ZaZ6xM9dHCL5TlyBgfLbaoaImEoZQB9lezux+bB/mYJBpqj5ll/plnAEVzLtjcl0Rf/xt/4vx+0GdGg==
+     procedure_id : 1679900609060978172
+     type_code : 12
+     code : |1+
+      // Summary: Instantiates a CUser by checking his password
+      // Syntax:
+      //[ <Result> = ] s_clConnect (<sIdentifier> is string, <sPassword> is string)
+      //
+      // Parameters:
+      //	sIdentifier (string): Identifier of the user (can be his email or his nickname)
+      //	sPassword (string): Password
+      // Return value:
+      // 	CUser: instance of CUser if the user is connected, NULL if the user is unknown or if the password is incorrect
+      //  For security reasons, we advise you not to differentiate between the two failure conditions
+      //
+      PROCEDURE GLOBAL s_clConnect( sIdentifier is string, sPassword is string ) : CUser
+      
+      // The identifier can be an email or a display name
+      IF (HReadSeekFirst(UserAccount,Email,sIdentifier) = False) _AND_ (HReadSeekFirst(UserAccount,DisplayName,sIdentifier) = False) THEN
+      	// Unknown user
+      	RESULT Null
+      END
+      
+      // The user was found, his password must be checked
+      sHashPwd is string = sHashPassword(sPassword)
+      IF UserAccount.Password<>sHashPwd THEN
+      	// Wrong password
+      	RESULT Null
+      END
+      
+      // Checks whether the account was enabled
+      IF UserAccount.EnabledAccount=False THEN
+      	RESULT Null
+      END
+      
+      // Loads the information
+      clForumuser is CUser
+      IF clForumuser.bLoadInfo(UserAccount.UserAccountID) THEN
+      	RESULT clForumuser
+      END
+      
+      RESULT Null
+     type : 458752
+   -
+     name : s_arrListUsers
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1679900609061043708
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] s_arrListUsers ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	table: // None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE GLOBAL s_arrListUsers()
+      
+      arrUser is array of CUser
+      
+      FOR EACH UserAccount 
+      	clUtil is CUser
+      	IF clUtil.bLoadInfo(UserAccount.UserAccountID) THEN
+      		Add(arrUser,clUtil)
+      	END
+      END
+      
+      CASE Error:
+      	ErrorPropagate()
+      	DeleteAll(arrUser)
+      
+      END:
+      RESULT arrUser
+      
+     type : 458752
+  properties :
+   -
+     name : p_Password
+     identifier : 0x175034b41500bdfc
+     type_code : 103
+     p_codes :
+      -
+        code : |1+
+         PROCEDURE PUBLIC p_Password(sValue is string)
+         
+         m_sPassword = sHashPassword(sValue)
+        type : 2031616
+     template_refs : []
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x100696f80e19e633
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

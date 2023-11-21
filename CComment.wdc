@@ -1,0 +1,117 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : CComment
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x175034a512ef86a0
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      CComment is Class
+      	m_nCommentID is 8-byte int <mapping=CommentID>
+      	m_sCommentContent is string <mapping=CommentContent>
+      	m_dtCommentDate is datetime <mapping=CommentDate>
+      	m_pclProduct is CArticle dynamic
+      	m_pclAuthor is CAuthor dynamic
+      END
+     type : 131072
+  procedures :
+   -
+     name : Manufacturer
+     procedure_id : 1679900544601196192
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructor( pclProduct is CArticle dynamic = Null, pclAuthor is CAuthor dynamic = Null )
+      
+      m_pclProduct = pclProduct
+      m_pclAuthor = pclAuthor
+      
+     type : 589824
+   -
+     name : Destructor_
+     procedure_id : 1679900544601261728
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructor()
+      
+     type : 655360
+   -
+     name : bLoadInfo
+     procedure_id : 1679900544601327264
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bLoadInfo (<nCommentID> is 8-byte int)
+      //
+      // Parameters:
+      //	nCommentID (8-byte integer): <specify the role of nCommentID>
+      // Return value:
+      // 	boolean: // 	None
+      //
+      PROCEDURE bLoadInfo( nCommentID is 8-byte int )
+      
+      IF HReadSeekFirst(Comment,CommentID,nCommentID)=False THEN
+      	RESULT False
+      END
+      
+      FileToMemory(object,Comment)
+      
+      // Loads the associated article
+      IF m_pclProduct=Null THEN
+      	m_pclProduct = new CArticle
+      	IF m_pclProduct.bLoadInfo(Comment.ItemID)=False THEN
+      		RESULT False
+      	END
+      END
+      
+      // Loads the associated author
+      IF m_pclAuthor=Null THEN
+      	m_pclAuthor = new CAuthor
+      	IF m_pclAuthor.bLoadInfo(Comment.UserAccountID)=False THEN
+      		RESULT False
+      	END
+      END
+      
+      RESULT True
+     type : 458752
+   -
+     name : AddComment
+     procedure_id : 1679900544601392800
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //AddComment ()
+      //
+      // Parameters:
+      //	None
+      
+      // Return value:
+      PROCEDURE AddComment()
+      
+      MemoryToFile(object,Comment)
+      Comment.ItemID = m_pclProduct.m_nItemID
+      Comment.UserAccountID = m_pclAuthor.m_nUserAccountID
+      
+      HAdd(Comment)
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x100696f80dd2e5d6
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

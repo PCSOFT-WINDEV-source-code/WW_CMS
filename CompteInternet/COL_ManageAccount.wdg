@@ -1,0 +1,526 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : COL_ManageAccount
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x175034b41521c0ac
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  internal_properties : CAAAAAgAAAAZCYvN+StMeJ5DHKbNhgVn6IGYLjoP4tFz6XkNixCHstSIrvmWTCfFBrSjeBGOrHWBRAd04AjPUm9zZNOcBQoz84eex1wETIyzswzcV8Imv5pDCPak+7ARZ6X0W2ahBk/bW83pu7TazWVHMUrQ8OjitwQkiXxlXIday2dBw/K9o1LZC+zwnyVgGR0X
+  type_code : 31
+  p_codes :
+   -
+     code : |1+
+      // The set of procedures named COL_ManageAcounts is used to mange the user accounts of a WebDev site
+      // It uses the following analysis files:
+      // - UserAccount: models a user account of the application
+      // - MemberAccount: relation file between the groups and their members
+      // The project must necessarily use the management of AWP contexts on the disk (ConfigureAWPContext(ctxDisk) in the initialization code of the project)
+      
+      // Constants of the internal component
+      CONSTANT
+      	// Constants for the names of rights on the site
+      	RIGHTS_SITEADMIN = "SITEADMIN"		// The users to whom these rights are granted can manage the entire site
+      	// Declare other names of rights if necessary
+      
+      	PARAM_ACTIVATION = "ID"			// Name of the parameter that must be passed to the activation page
+      	
+      	// Parameters for sending emails
+      	PARAM_SENDER_EMAIL = "PARAM_EMAIL_SENDER"
+      	PARAM_EMAIL_SERVER = "PARAM_EMAIL_SERVER"
+      	PARAM_EMAIL_PORT = "PARAM_EMAIL_PORT"
+      	PARAM_EMAIL_USER = "PARAM_EMAIL_USER"
+      	PARAM_EMAIL_PASSWORD = "PARAM_EMAIL_PASSWORD"
+      	PARAM_EMAIL_SMTP_OPTION = "PARAM_EMAIL_SMTP_OPTION"
+      	
+      END
+      
+      
+      // Global variables of the internal component (these variables are placed in the AWP context in the InitializeManagementInternetAccount procedure)
+      gbInitCompleted is boolean = False					// True if the initialization of the internal component was already performed
+      gnCurrentUserID is 8-byte int				// Connected user (NULL if no user is connected)
+      gpclCurrentUser is CUser dynamic	
+      gaaRight is ASSOCIATIVE ARRAY of strings			// Array of rights defined on the site
+      gbActivationByEmail is boolean = False				// True if the user accounts are inactive when they are created and if they must be enabled by email
+      
+      gsURLReturnPageConnectionSuccessful is string		// Return URL after user connection
+      gsURLReturnPageAbandon is string				// Return URL after connection cancelation
+      gsURLCustomSpacePage is string 				// URL of the page of personal section
+      gsURLHomePage is string 					// URL of the home page
+      gsURLActivationPage is string 					// URL of the AWP page for enabling a user account
+      gsURLRegistrationPage is string					// URL of the page for registering to the site
+      gsURLGetPasswordPage is string 			// URL of the page for retrieving forgotten passwords
+      gsURLConnectionPage is string					// URL of the connection page
+      gsURLDisconnectionPage is string					// URL of the disconnection page
+      gsURLProfilePage is string						// URL of the page for editing the profile of the connected user
+      gsURLUserManagementPage is string			// URL of the page for managing users
+      
+      // Parameters for sending messages
+      gsEmailActivationSender is string = "activation"
+      gsEmailTechnicalSupport is string = "assistance"
+      
+      // The name of the site is a string used in the messages or emails sent from the site
+      // Its default value is the deployment name of the site but any value can be used
+      gsSiteName is string = ProjectInfo(piNameDeployedSite)
+     type : 720896
+  procedures :
+   -
+     name : Disconnects
+     internal_properties : CAAAAAgAAACyU2x9rFVIgfUhDRbnOfs6io9hD7DSU+nnnuctvnCwWZH/Zy6T1LHdO4i7gxipbaLoy6NgfU12ahiTV31BwAsNQwNctNDcnJgOFGyBZJ8jmm6+q6UIVSbyKCmpXJueZg/MXLpWQ1e3eVd+iGihBg==
+     procedure_id : 1679900609062551724
+     type_code : 15
+     code : |1+
+      // Summary: Disconnects the current user
+      // Syntax:
+      // Disconnects ()
+      //
+      PROCEDURE Disconnects()
+      
+      gpclCurrentUser = Null
+      gnCurrentUserID = 0
+     type : 458752
+   -
+     name : bIsConnected
+     internal_properties : CAAAAAgAAACQsYqYjx1QAXVhDRbnubv6Ss8hzzASU6mnHidt/rCw2RF/565T1PHdO0i7g5ipLeKoC2Og/Y32Sjhztx1hYKut4+P8VDC8vHgu9MwhhD9Dug6eS8XotcZSSAmJfLu+hi/svFp2I7fXMRctJoqDJA==
+     procedure_id : 1679900609062617260
+     type_code : 15
+     code : |1-
+      // Summary: Indicates whether the user is connected to the site
+      // Syntax:
+      // bIsConnected ()
+      //
+      // Return value:
+      // 	boolean: True if the user is connected to the site
+      //
+      PROCEDURE bIsConnected()
+      
+      // In test mode, an "autoconnect.txt" file can be created in the WW_CMS_WEB directory to automatically connect a user
+      // This file must contain login+CR+password
+      IF InTestMode() _AND_ (gpclCurrentUser=Null) THEN
+      	sAutoConnectFile is string = fExeDir()+"\autoconnect.txt"
+      	IF fFileExist(sAutoConnectFile) THEN
+      		sAutoConnectInfo is string = fLoadText(sAutoConnectFile)
+      		gpclCurrentUser = CUser::s_clConnect(ExtractString(sAutoConnectInfo,1,CR),ExtractString(sAutoConnectInfo,2,CR))
+      		gnCurrentUserID = gpclCurrentUser.m_nUserAccountID
+      	END
+      END
+      
+      RESULT (gpclCurrentUser<>Null)
+     type : 458752
+   -
+     name : bUserAvailable
+     internal_properties : CAAAAAgAAABk2piQTHc9frUYXC8sGrFNdcD6A/V8pr7a2vCJUrrLdXKYnWF8rhmA8NMIXOr9X7Ar7TD9Wujp9jHrkBgEgeqfpH9wUx6NSVSV/qWEdwJENj3QB7p0JHM=
+     procedure_id : 1679900609062682796
+     type_code : 15
+     code : |1-
+      // Summary: Checks whether an identifier is not already used (as email or display name)
+      // Syntax:
+      //[ <Result> = ] bUserAvailable (<sIdentifier> is string [, <nLock> is int])
+      //
+      // Parameters:
+      //	sIdentifier (UNICODE string): String to check
+      //	nLock (integer - default value=8): indicates whether the reading must lock the record
+      // Return value:
+      // 	boolean: True if the identifier does not exist neither as email, nor as display name
+      //
+      PROCEDURE bUserAvailable( sIdentifier is string, nLock is int = hLockNo )
+      
+      // Check the emails
+      IF HReadSeekFirst(UserAccount,Email,sIdentifier,nLock) THEN
+      	RESULT False
+      END
+      
+      // The identifier is free
+      RESULT True
+     type : 458752
+   -
+     name : SendActivationEmail
+     procedure_id : 1679900609062748332
+     type_code : 15
+     code : |1+
+      // Summary: Sends the email for enabling the account
+      // Syntax:
+      //SendActivationEmail (<nUsrID> is 8-byte int)
+      //
+      // Parameters:
+      //	nUsrID (8-byte integer): identifier of the user
+      
+      PROCEDURE SendActivationEmail( nIDUtil is 8-byte int )
+      
+      IF gbActivationByEmail=False THEN 
+      	RETURN
+      END
+      
+      sActivationURL is string = PageAddress("",paFULL)
+      nPosLastSlash is int = Position(sActivationURL,"/",0,FromEnd)
+      sActivationURL = sActivationURL[[1 TO nPosLastSlash]]+gsURLActivationPage
+      
+      // Positions on the record of the user
+      HReadSeekFirst(UserAccount,UserAccountID,nIDUtil)
+      
+      cEmail is an Email
+      WITH cEmail
+      	.Sujet = StringBuild("Enabling your %1 account",gsSiteName)
+      	.Expéditeur = gsEmailActivationSender
+      	.Message = StringBuild(<§@1dc26b98000150580000§>,sActivationURL,nIDUtil+"-"+Crypt(UserAccount.Password,"",compressNone,encodeBASE64),PARAM_ACTIVATION,gsSiteName,gsEmailTechnicalSupport)
+      END
+      Add(cEmail.Recipient,UserAccount.Email)
+      
+      SendingEmail(cEmail)
+     type : 458752
+   -
+     name : bUserEnabled
+     procedure_id : 1679900609062813868
+     type_code : 15
+     code : |1-
+      // Summary: This function searches for a user according to his name or to his email and returns the activity status of the account
+      // Syntax:
+      //[<Result> = ] bUserEnabled (<sIDUser> is string [, <bLockRec> is boolean])
+      //
+      // Parameters:
+      //	sUserID (string): User name or email
+      // 	bLockRec (boolean - default value=0): Indicates whether the read operation must lock the record
+      // Return value:
+      // 	boolean: true if the account is enabled
+      //
+      PROCEDURE bUserEnabled( sUserID is string , bLockRec is boolean = False )
+      
+      // Searches for the user
+      IF bUserAvailable(sUserID,bLockRec) THEN
+      	RESULT False
+      END
+      
+      RESULT UserAccount.EnabledAccount
+     type : 458752
+   -
+     name : ReinitializePassword
+     internal_properties : CAAAAAgAAAACIxwJpUn8ufHFM7iF5fMiZuuFqyLOU+Fj2vX7kEC0VWXbD04ZvO0hD3TlwSppZRoYu4eMe1UKcS2Y5oZGvTImeDARJ4l9dauPZSOCCZwKg0dXvIgteotRdfbk2diTcRTxeV8hqDSEcEySmBgRtg==
+     procedure_id : 1679900609062879404
+     type_code : 15
+     code : |1+
+      // Summary: Reinitializes the password of a user, disables the account and sends the activation email
+      // Syntax:
+      //ReinitializePassword (<sIDUser> is string)
+      //
+      // Parameters:
+      //	sUserID (string): Name or email of the user
+      
+      PROCEDURE ReinitializePassword( sUserID is string )
+      
+      // Checks whether the account exists and whether it is enabled
+      IF NOT bUserEnabled(sUserID,True) THEN
+      	RETURN
+      END
+      
+      // Generates a new password
+      sNewPWD is string
+      LOOP (8)
+      	sNewPWD += Charact(47+Random(75))
+      END
+      
+      // Reinitializes the account
+      UserAccount.Password = sHashPassword(sNewPWD)
+      HModify(UserAccount)
+      
+      // Sends the activation email
+      SendEmailPasswordReminder(UserAccount.UserAccountID,sNewPWD)
+      Info(<§@1dc26b98000150580001§>)
+     type : 458752
+   -
+     name : DeclareRights
+     procedure_id : 1679900609062944940
+     type_code : 15
+     code : |1+
+      // Summary: Declares the rights for a site
+      // Syntax:
+      //DeclareRights (<sRightsName> is string, <sRightsDescription> is string)
+      //
+      // Parameters:
+      //	sRightsName (string): "Name" of the rights, it is a string containing up to 20 characters that identifies the rights
+      //	sRightsDescription (string): Description of the rights
+      
+      PROCEDURE DeclareRights( sRightsName is string , sRightsDescription is string )
+      
+      // Declaring the rights means adding the rights into the associative array
+      gaaRight[sRightsName] = sRightsDescription
+      
+      
+     type : 458752
+   -
+     name : bUserOwnsRights
+     procedure_id : 1679900609063010476
+     type_code : 15
+     code : |1-
+      // Summary: Returns True if the connected user has the requested rights
+      // Syntax:
+      //[<Result> = ] bUserHasRights (<sRightsName> is string, <sRightsParam> is string)
+      //
+      // Parameters:
+      //	sRightsName (string): "Name" of the rights, it is a string containing up to 20 characters that identifies the rights
+      //	sRightsParam (string): "Parameter" of the rights, it is a string containing up to 20 characters that specifies on which the rights are applied for example
+      // Return value:
+      // 	Undefined type: // 	boolean
+      //
+      PROCEDURE bUserOwnsRights( LOCAL sRightsName is string , LOCAL sParamRights is string )
+      
+      // You must be connected to use this function
+      IF bIsConnected()=False THEN
+      	RESULT False
+      END
+      
+      RESULT pclCurrentUser().bOwnsRights(sRightsName,sParamRights)
+     type : 458752
+   -
+     name : bInitializeManagementInternetAccount
+     internal_properties : CAAAAAgAAAB/OeFkqGtODDs2M547ZuBwlaNAVd0CzH50qkLaaIgbOkbdu636mmjxQSvqJFI9itiCYT7zZbVHVocyEWz/FUEcjazNkRpWMl9c4OubPGrmkDMuJ0/vmoveE5fixCLg+J5TolIJZuP+D3y719XUHCVlp5aT0QI4AXftl6bcY7LI
+     procedure_id : 1679900609063076012
+     type_code : 15
+     code : |1-
+      // Summary: Initializes the internal component
+      // Syntax:
+      //[ <Result> = ] bInitializeManagementInternetAccount()
+      //
+      // Return value:
+      // 	boolean: Returns True during the first initialization
+      // The caller knows that the variables of the set of procedures have their default values and that they can be replaced
+      //
+      // Returns False during the other initializations (once the AWP context is re-read)
+      // The caller knows that the variables have been re-read in the AWP session
+      //
+      PROCEDURE bInitializeManagementInternetAccount()
+      
+      // Declare the global variables of the context
+      DeclareAWPContext(gbInitCompleted)
+      DeclareAWPContext(gnCurrentUserID)
+      
+      DeclareAWPContext(gsURLReturnPageConnectionSuccessful)
+      DeclareAWPContext(gsURLReturnPageAbandon)
+      DeclareAWPContext(gsURLHomePage)
+      DeclareAWPContext(gsURLActivationPage)
+      DeclareAWPContext(gsURLCustomSpacePage)
+      DeclareAWPContext(gsURLRegistrationPage)
+      DeclareAWPContext(gsURLGetPasswordPage)
+      DeclareAWPContext(gsURLConnectionPage)
+      DeclareAWPContext(gsURLDisconnectionPage)
+      DeclareAWPContext(gsURLProfilePage)
+      DeclareAWPContext(gsURLUserManagementPage)
+      
+      DeclareAWPContext(gaaRight)
+      DeclareAWPContext(gbActivationByEmail)
+      DeclareAWPContext(gsEmailActivationSender)
+      DeclareAWPContext(gsEmailTechnicalSupport)
+      
+      // If it is the first initialization (the variables have not been read in the context)
+      IF gbInitCompleted = False THEN
+      	// Declare the rights supported by the site
+      	DeclareRights(RIGHTS_SITEADMIN,"Managing the site")
+      			
+      	// The initialization is completed
+      	gbInitCompleted = True
+      
+      	// Returns True during the first initialization
+      	// The caller knows that the variables of the set of procedures have their default values and that they can be replaced
+      	RESULT True
+      ELSE
+      	// Reload the object containing the connected user
+      	IF gnCurrentUserID<>0 THEN
+      		gpclCurrentUser = new CUser
+      		IF gpclCurrentUser.bLoadInfo(gnCurrentUserID)=False THEN
+      			gnCurrentUserID = 0
+      			gpclCurrentUser = Null
+      		END
+      	END
+      END
+      
+      
+      
+      // Returns False during the other initializations (once the AWP context is re-read)
+      // The caller knows that the variables have been re-read in the AWP session
+      RESULT False
+     type : 458752
+   -
+     name : SendEmailPasswordReminder
+     procedure_id : 1679900609063141548
+     type_code : 15
+     code : |1+
+      // Summary: Sends a message used to remind the password
+      // Syntax:
+      //SendEmailPasswordReminder (<nIDUs> is int, <sNewPassword> is string)
+      //
+      // Parameters:
+      //	nUsID (integer): Identifier of the user
+      //	sNewPassword (string): New password
+      //
+      PROCEDURE SendEmailPasswordReminder( nIDUtil is int, sNewPassword is string )
+      
+      // Positions on the record of the user
+      HReadSeekFirst(UserAccount,UserAccountID,nIDUtil)
+      
+      cEmail is an Email
+      WITH cEmail
+      	.Sujet = StringBuild("Reinitializing your %1 password",gsSiteName)
+      	.Expéditeur = gsEmailActivationSender
+      	.Message = StringBuild(<§@1dc26b98000150580002§>,gsSiteName,sNewPassword)
+      END
+      Add(cEmail.Recipient,UserAccount.Email)
+      
+      SendingEmail(cEmail)
+     type : 458752
+   -
+     name : pclCurrentUser
+     procedure_id : 1679900609063207084
+     type_code : 15
+     code : |1+
+      // Summary: Access the connected user
+      // Syntax:
+      //[ <Result> = ] pclCurrentUser ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	CUser dynamic: Connected user (NULL if none)
+      //
+      PROCEDURE pclCurrentUser()
+      
+      RESULT gpclCurrentUser
+      
+     type : 458752
+   -
+     name : bConnected
+     procedure_id : 1679900609063272620
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bConnect (<sUserName> is string, <sPassword> is string)
+      //
+      // Parameters:
+      //	sUserName (string): <specify the role of sUserName>
+      //	sPassword (string): <specify the role of sPassword>
+      // Return value:
+      // 	boolean: // 	None
+      //
+      PROCEDURE bConnected( sUserName is string, sPassword is string ) : boolean
+      
+      gpclCurrentUser = CUser::s_clConnect(sUserName,sPassword)
+      IF gpclCurrentUser<>Null THEN
+      	gnCurrentUserID = gpclCurrentUser.m_nUserAccountID
+      ELSE
+      	gnCurrentUserID = 0
+      END
+      
+      RESULT bIsConnected()
+     type : 458752
+   -
+     name : bEnableUser
+     internal_properties : CAAAAAgAAAAM34km+p2LM0Jafr/gijXeTImHicFj7lFu9FrqtgEK91qgYssHbROYrXPWPQuCRnMMZ684xbe6oq1nscH9xKapdVr2FWTPC1MVk/+hO52w5+vn7IjZ6fSvrcAYUpDA0PhZ/QJLYO5TzRKT4VFwJvmoQ216mG+7u8SECyh/lCtC1H7uDeo=
+     procedure_id : 1679900609063338156
+     type_code : 15
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bEnableUser (<nActivationID> is 8-byte int, <sActivationPWD> is string)
+      //
+      // Parameters:
+      //	nActivationID (8-byte integer): <specify the role of nActivationID>
+      //	sActivationPWD (ANSI string): <specify the role of sActivationPWD>
+      // Return value:
+      // 	boolean: // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE bEnableUser( nIDActivation is 8-byte int, sActivationPWD is string )
+      
+      // Find the user account
+      HReadSeekFirst(UserAccount,UserAccountID,nIDActivation)
+      IF NOT HFound THEN
+      	RESULT False
+      END
+      
+      // The account exists, check whether the incoming link corresponds to an email of the site
+      IF Crypt(UserAccount.Password,"",compressNone,encodeBASE64)<>sActivationPWD THEN
+      	RESULT False
+      END
+      
+      // Enable the account
+      UserAccount.EnabledAccount = True
+      HModify(UserAccount)
+      
+      RESULT True
+      
+      CASE Error:
+      	ErrorPropagate()
+      	RESULT False
+     type : 458752
+   -
+     name : nEmailToUserID
+     procedure_id : 1679900609063403692
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] nEmailToUserID (<sEmail> is string)
+      //
+      // Parameters:
+      //	sEmail (UNICODE string): <specify the role of sEmail>
+      // Return value:
+      // 	Undefined type: // 	None
+      //
+      PROCEDURE nEmailToUserID( sEmail is string )
+      
+      IF HReadSeekFirst(UserAccount,Email,sEmail) THEN
+      	RESULT UserAccount.UserAccountID
+      ELSE
+      	ErrorThrow(1,"User not found")
+      	RESULT 0
+      END
+      
+      
+     type : 458752
+   -
+     name : sHashPassword
+     procedure_id : 1679900609063469228
+     type_code : 15
+     code : |1-
+      // Summary: Encrypts a password and encodes the result in Base64
+      // Syntax:
+      //[ <Result> = ] sHashPassword (<sPassword> is string)
+      //
+      // Parameters:
+      //	sPassword (UNICODE string): password
+      // Return value:
+      // 	variant: // 	string
+      //
+      PROCEDURE sHashPassword( sPassword is string )
+      
+      RESULT Crypt(HashString(HA_SHA_256,sPassword),"",compressNone,encodeBASE64)
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : COL_SansNom1
+resources :
+ string_res :
+  identifier : 0x1dc26b9800015058
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+  strings :
+   -
+     text :
+      en-GB : "Hello,\r\n\r\nA user account was created on the %4 site.\r\nTo use this account, it must be enabled beforehand by clicking the following link: %1?%3=%2\r\n\r\nIgnore this message if no account was created.\r\nIf problems occur while enabling your account, contact us at the following address: %5\r\n\r\nBest regards,\r\nThe %4 team\r\n"
+     index : 0
+   -
+     text :
+      en-GB : A new password was generated and it was emailed to you.
+     index : 1
+   -
+     text :
+      en-GB : "Hello,\r\n\r\nYour password on the %1 site was reinitialized.\r\nYour new password is: %2\r\n\r\nBest regards,\r\nThe %1 team\r\n"
+     index : 2
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

@@ -1,0 +1,336 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : CArticle
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x16040f3a04e20235
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      CArticle is Class
+      	m_nItemID is 8-byte int <mapping=ItemID>
+      	m_sArticleTitle is string ANSI <mapping=ArticleTitle>
+      	m_sArticleContent is string <mapping=ArticleContent>
+      	m_dtPublicationDate is datetime <mapping=PublicationDate>
+      	m_sModeratorLogin is string ANSI <mapping=ModeratorLogin>
+      	m_nArticleStatus is 2-byte int <mapping=ArticleStatus>
+      	m_nCategoryID is 8-byte int <mapping=CategoryID>
+      	m_dtModificationDate is datetime <mapping=ModificationDate>
+      	m_sArticleSummary is string <mapping=ArticleSummary>
+      	m_sNameDisplayPage is string ANSI <mapping=NameDisplayPage>
+      	m_nAuthorID is 8-byte int <mapping=AuthorID>
+      	m_nArticleImageID is 8-byte int <mapping=ArticleImageID>
+      	
+      	m_arrComment is array of CComment dynamic
+      END
+     type : 131072
+  procedures :
+   -
+     name : Manufacturer
+     procedure_id : 1586409710605763125
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructor()
+      
+     type : 589824
+   -
+     name : Destructor_
+     procedure_id : 1586409710605828661
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructor()
+      
+     type : 655360
+   -
+     name : bLoadInfo
+     procedure_id : 1586409822279132593
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bLoadInfo (<nArticleID> is 8-byte int)
+      //
+      // Parameters:
+      //	nArticleID (8-byte integer): <specify the role of nCategoryID>
+      // Return value:
+      // 	boolean: // 	None
+      //
+      PROCEDURE bLoadInfo( nItemID is 8-byte int )
+      
+      IF HReadSeekFirst(article,ItemID,nItemID) THEN
+      	FileToMemory(object,article)
+      	RESULT True
+      END
+      
+      RESULT False
+     type : 458752
+   -
+     name : ImagePath
+     procedure_id : 1586409822279198223
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] ImagePath ([<nWidth> is int [, <nHeight> is int]])
+      //
+      // Parameters:
+      //	nWidth (integer - default value=0): <specify the role of nWidth>
+      //	nHeight (integer - default value=0): <specify the role of nHeight>
+      // Return value:
+      // 	ANSI string: // 	None
+      //
+      PROCEDURE ImagePath( nWidth is int = 0, nHeight is int = 0)
+      
+      IF m_nArticleImageID=0 THEN
+      	RESULT ""
+      END
+      
+      aaParam is ASSOCIATIVE ARRAY of strings
+      aaParam["id"] = m_nArticleImageID
+      IF nWidth<>0 THEN aaParam["width"] = nWidth
+      IF nHeight<>0 THEN aaParam["top"] = nHeight
+      
+      RESULT BuildURL(SET_CMS.gsURLMediaPage,aaParam)
+     type : 458752
+   -
+     name : s_ListRecentOnes
+     procedure_id : 1586412665552600915
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] s_ListRecentOnes ([<nTop> is int])
+      //
+      // Parameters:
+      //	nTop (integer - default value=-1): <specify the role of nTop>
+      // Return value:
+      // 	table: // None
+      //
+      PROCEDURE GLOBAL s_ListRecentOnes( nTop is int = -1 )
+      
+      arrProduct is array of 8-byte int
+      
+      QRY_LAST_ARTICLES.pArticleStatus = RPT_STATUS_ARTICLE_VALIDATED
+      QRY_LAST_ARTICLES.pCategory = Null
+      QRY_LAST_ARTICLES.pTop = (nTop<>-1 ? nTop ELSE Null)
+      IF HExecuteQuery(QRY_LAST_ARTICLES) THEN
+      	FOR EACH QRY_LAST_ARTICLES 
+      		Add(arrProduct,QRY_LAST_ARTICLES.ItemID)
+      	END
+      END
+      
+      RESULT arrProduct
+      
+     type : 458752
+   -
+     name : AuthorName
+     procedure_id : 1586428221929997720
+     type_code : 12
+     code : |1-
+      // Summary: Returns the name of the author of an article
+      // Syntax:
+      //[ <Result> = ] AuthorName ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	String
+      //
+      PROCEDURE AuthorName()
+      
+      IF HReadSeekFirst(UserAccount,UserAccountID,m_nAuthorID) THEN
+      	RESULT UserAccount.DisplayName
+      END
+      
+      RESULT ""
+     type : 458752
+   -
+     name : CategoryName
+     procedure_id : 1586444873535647092
+     type_code : 12
+     code : |1-
+      // Summary: Returns the caption of the category of an article
+      // Syntax:
+      //[ <Result> = ] CategoryName ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	string
+      //
+      PROCEDURE CategoryName()
+      
+      IF HReadSeekFirst(category,CategoryID,m_nCategoryID) THEN
+      	RESULT category.CategoryCaption
+      END
+      
+      RESULT ""
+     type : 458752
+   -
+     name : ListOtherArticles
+     procedure_id : 1586803507663409600
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] ListOtherArticles ([<nTop> is int])
+      //
+      // Parameters:
+      //	nTop (integer - default value=0): <specify the role of nTop>
+      // Return value:
+      // 	table: // None
+      //
+      PROCEDURE ListOtherArticles( nTop is int = 0 )
+      
+      arrProduct is array of 8-byte int
+      
+      QRY_CATEGORY_ARTICLE.pArticle = m_nItemID
+      QRY_CATEGORY_ARTICLE.pCategory = m_nCategoryID
+      QRY_CATEGORY_ARTICLE.pStatus = SET_CMS.RPT_STATUS_ARTICLE_VALIDATED
+      QRY_CATEGORY_ARTICLE.pTop = (nTop>0 ? nTop ELSE Null)
+      IF HExecuteQuery(QRY_CATEGORY_ARTICLE) THEN
+      	FOR EACH QRY_CATEGORY_ARTICLE 
+      		Add(arrProduct,QRY_CATEGORY_ARTICLE.ItemID)
+      	END
+      END
+      
+      RESULT arrProduct
+     type : 458752
+   -
+     name : LoadComment
+     procedure_id : 1586813429041418091
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //LoadComment ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      PROCEDURE LoadComment()
+      
+      DeleteAll(m_arrComment)
+      
+      pclComment is CComment dynamic
+      QRY_ARTICLE_COMMENTS.pIDArticle = m_nItemID
+      IF HExecuteQuery(QRY_ARTICLE_COMMENTS) THEN
+      	FOR EACH QRY_ARTICLE_COMMENTS
+      		pclComment = new CComment(object)
+      		IF pclComment.bLoadInfo(QRY_ARTICLE_COMMENTS.CommentID) THEN
+      			Add(m_arrComment,pclComment)
+      		END
+      	END
+      END
+      
+      
+     type : 458752
+   -
+     name : s_ListToModerate
+     procedure_id : 1624620544331500222
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] s_ListToModerate ([<sCategoryList> is string])
+      //
+      // Parameters:
+      //	sCategoryList (ANSI string - default value="*"): <specify the role of sCategoryList>
+      // Return value:
+      // 	table: // None
+      //
+      PROCEDURE PUBLIC GLOBAL s_ListToModerate( sCategoryList is string = "*" )
+      
+      arrProduct is array of 8-byte int
+      
+      IF sCategoryList="*" THEN
+      	QRY_ArticleWaitForModeration.pListModerationCategory = Null
+      ELSE
+      	QRY_ArticleWaitForModeration.pListModerationCategory = sCategoryList
+      END
+      
+      IF HExecuteQuery(QRY_ArticleWaitForModeration,hQueryDefault) THEN
+      	FOR EACH QRY_ArticleWaitForModeration 
+      		Add(arrProduct,QRY_ArticleWaitForModeration.ItemID)
+      	END
+      END
+      
+      RESULT arrProduct
+      
+      
+      
+      
+     type : 458752
+   -
+     name : Publish
+     procedure_id : 1624625376190756103
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      // Publish ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      PROCEDURE Publish()
+      
+      IF HReadSeekFirst(article,ItemID,m_nItemID,hLockWrite) THEN
+      	article.ArticleStatus = RPT_STATUS_ARTICLE_VALIDATED
+      	article.PublicationDate = DateSys()+TimeSys()
+      	article.ModeratorLogin = pclCurrentUser().m_sDisplayName
+      	HModify(article)
+      END
+      
+      
+     type : 458752
+   -
+     name : Saves
+     procedure_id : 1624664571998877641
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      // Saves ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      PROCEDURE Saves()
+      
+      IF m_nItemID=0 _OR_ HReadSeekFirst(article,ItemID,m_nItemID,hLockWrite) THEN
+      	MemoryToFile(object,article)
+      	
+      	IF m_nItemID=0 THEN
+      		HAdd(article)
+      		m_nItemID = article.ItemID
+      	ELSE
+      		HModify(article)
+      	END
+      END
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x100696f80dfee5f5
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

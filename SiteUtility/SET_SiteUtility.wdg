@@ -1,0 +1,329 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : SET_SiteUtility
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x175034ce1865268a
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  type_code : 31
+  p_codes :
+   -
+     code : |1+
+      gaaParameters is ASSOCIATIVE ARRAY of strings
+      gbInitCompleted is boolean = False
+      gsSiteURLDatabase is string
+     type : 720896
+  procedures :
+   -
+     name : BuildURL
+     procedure_id : 1679900720786450058
+     type_code : 15
+     code : |1-
+      // Summary: Builds a URL by adding parameters to a base URL
+      // Syntax:
+      //[ <Result> = ] BuildURL (<sPageURL> is string, <aaAdditionalParameters> is associative array)
+      //
+      // Parameters:
+      //	sPageURL (string): Base URL
+      //	aaAdditionalParameters (associative array): Additional parameters
+      // Return value:
+      // 	string: URL
+      
+      PROCEDURE BuildURL( sURLPage is string, aaAdditionalParameters is ASSOCIATIVE ARRAY of strings )
+      
+      sFinalURL is string
+      
+      // It the URL received in parameter is a relative URL, add the base URL of the site
+      // in order for IIS not to perform any resolution shortcut
+      IF (sURLPage[~"http")=False THEN
+      	sFinalURL = gsSiteURLDatabase
+      END
+      
+      sFinalURL += sURLPage
+      
+      // Add parameters
+      IF aaAdditionalParameters..Occurrence>0 THEN
+      	sFinalURL += "?"
+      	FOR EACH sVal, sKey of aaAdditionalParameters
+      		// There is no need to use URLEncode on the values of parameters
+      		// The encoding is automatically performed by ScriptDisplay
+      		sFinalURL += sKey + "=" + sVal + "&"
+      	END
+      	sFinalURL = Truncate(sFinalURL,1,numberOfCharactersToDelete)
+      END
+      
+      // Add the identifier of AWP context (if applicable)
+      IF IdentifierAWPContext()<>"" THEN
+      	IF aaAdditionalParameters..Occurrence>0 THEN
+      		sFinalURL += "&" + IdentifierAWPContext()
+      	ELSE
+      		sFinalURL += "?" + IdentifierAWPContext()
+      	END
+      END
+      
+      RESULT sFinalURL
+     type : 458752
+   -
+     name : HTMLToXML
+     procedure_id : 1679900720786581130
+     type_code : 15
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] HTMLToXML (<sContent>)
+      //
+      // Parameters:
+      //	sContent: <specify the role of sContent>
+      // Return value:
+      // 	Undefined type: // 	None
+      //
+      // Example:
+      // Indicate an example.
+      //
+      PROCEDURE HTMLToXML(LOCAL sContents)
+      
+      
+      sContents = Replace(sContents,"&nbsp;","&#160;")
+      
+      
+      RESULT sContents
+     type : 458752
+   -
+     name : _LoadSiteParameter
+     procedure_id : 1679900720786646666
+     type_code : 15
+     code : |1+
+      // Summary: Initializes the array of global site parameters
+      // Syntax:
+      //_LoadSiteParameter ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      PROCEDURE PRIVATE _LoadSiteParameter()
+      
+      DeleteAll(gaaParameters)
+      FOR EACH Parameter 
+      	gaaParameters[Parameter.ParameterName] = Parameter.ParameterValue
+      END
+     type : 458752
+   -
+     name : ValeurSiteParameter
+     procedure_id : 1679900720786712202
+     type_code : 15
+     code : |1-
+      // Summary: Returns the value of a site parameter
+      // Syntax:
+      //[ <Result> = ] SiteParameterValue (<sParameterName> is string [, <sDefaultValue> is string])
+      //
+      // Parameters:
+      //	sParamName (UNICODE string): Name of the parameter
+      //	sDefaultValue (UNICODE string - default value=""): <specify the role of sDefaultValue>
+      // Return value:
+      // 	UNICODE string: Value of the parameter
+      //
+      PROCEDURE ValeurSiteParameter( sParameterName is string, sDefaultValue is string = "" )
+      
+      IF gaaParameters[sParameterName]..Empty THEN
+      	gaaParameters[sParameterName] = sDefaultValue
+      END
+      
+      RESULT gaaParameters[sParameterName]
+     type : 458752
+   -
+     name : SaveSiteParameter
+     procedure_id : 1679900720786777738
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //SaveSiteParameter (<sParamName> is string, <sParamValue> is string)
+      //
+      // Parameters:
+      //	sParamName (string): <specify the role of sParamName>
+      //	sParamValue (string): <specify the role of sParamValue>
+      // Return value:
+      // 	None
+      //
+      // Example:
+      // Indicate an example.
+      //
+      PROCEDURE SaveSiteParameter(sParamName is string,LOCAL sParamValue is string)
+      
+      IF HReadSeekFirst(Parameter,ParameterName,sParamName,hLockWrite) THEN
+      	Parameter.ParameterValue = sParamValue
+      	HModify(Parameter)
+      ELSE
+      	Parameter.ParameterName = sParamName
+      	Parameter.ParameterValue = sParamValue
+      	HAdd(Parameter)
+      END
+      
+      gaaParameters[sParamName] = sParamValue
+      
+     type : 458752
+   -
+     name : bInitUtility
+     procedure_id : 1679900720786843274
+     type_code : 15
+     code : |1+
+      // Summary: Initializes the internal component
+      // Syntax:
+      //[ <Result> = ] bInitUtility ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	boolean: // Returns True during the first initialization
+      // The caller knows that the variables of the set of procedures have their default values and that they can be replaced
+      //
+      // Returns False during the other initializations (once the AWP context is re-read)
+      // The caller knows that the variables have been re-read in the AWP session
+      //
+      PROCEDURE bInitUtility()
+      
+      DeclareAWPContext(gaaParameters)
+      DeclareAWPContext(gbInitCompleted)
+      DeclareAWPContext(gsSiteURLDatabase)
+      
+      IF gbInitCompleted=False THEN
+      	// Loads the site parameters from the database
+      	_LoadSiteParameter()
+      	
+      	// Tries to automatically define the base URL of the site
+      	sFullURL is string = PageAddress(displayerror,paFULL)
+      	sRelativeURL is string = PageAddress(displayerror,paRELATIVE)
+      	gsSiteURLDatabase = Truncate(sFullURL,Length(sRelativeURL),numberOfCharactersToDelete)
+      		
+      	// The initialization is completed
+      	gbInitCompleted = True
+      	
+      	// Returns True during the first initialization
+      	// The caller knows that the variables of the set of procedures have their default values and that they can be replaced
+      	RESULT True
+      END
+      
+      
+      
+      // Returns False during the other initializations (once the AWP context is re-read)
+      // The caller knows that the variables have been re-read in the AWP session
+      RESULT False
+     type : 458752
+   -
+     name : BuildSimpleURL
+     procedure_id : 1679900720786908810
+     type_code : 15
+     code : |1-
+      // Summary: Builds a URL by adding parameters to a base URL
+      // Syntax:
+      //[ <Result> = ] BuildSimpleURL (<sPageURL> is string)
+      //
+      // Parameters:
+      //	sPageURL (string): Base URL
+      // Return value:
+      // 	string: URL
+      
+      //	aaAdditionalParameters (associative array): Additional parameters
+      PROCEDURE BuildSimpleURL( sURLPage is string )
+      
+      sFinalURL is string
+      
+      // It the URL received in parameter is a relative URL, add the base URL of the site
+      // in order for IIS not to perform any resolution shortcut
+      IF (sURLPage[~"http")=False THEN
+      	sFinalURL = gsSiteURLDatabase
+      END
+      
+      // Adds the URL of the page and the identifier of AWP context
+      sFinalURL += sURLPage + ["?"] + IdentifierAWPContext()
+      
+      RESULT sFinalURL
+     type : 458752
+   -
+     name : ToastError_Srv
+     procedure_id : 1679900720786974346
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //ToastError_Srv (<sErrorMessage> is string)
+      //
+      // Parameters:
+      //	sErrorMessage (string): <specify the role of sErrorMessage>
+      // Return value:
+      // 	None
+      //
+      PROCEDURE ToastError_Srv(sErrorMessage is string )
+      
+      ToastDisplay(sErrorMessage,toastShort,vaTop,haCenter,PastelRed)
+      
+     type : 458752
+   -
+     name : ToastInfo_Srv
+     procedure_id : 1679900720787039882
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //ToastInfo_Srv (<sMessage> is string)
+      //
+      // Parameters:
+      //	sMessage (UNICODE string): <specify the role of sErrorMessage>
+      // Return value:
+      // 	None
+      //
+      PROCEDURE ToastInfo_Srv(sMessage is string )
+      
+      ToastDisplay(sMessage,toastLong,vaTop,haCenter,PastelGreen)
+      
+     type : 458752
+   -
+     name : SendingEmail
+     procedure_id : 1679900720787105418
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //SendEmail (<CEmail> is Email)
+      //
+      // Parameters:
+      //	cEmail (Email): <specify the role of cEmail>
+      // Return value:
+      // 	None
+      //
+      PROCEDURE SendingEmail( cEmail is an Email )
+      
+      EmailSetTimeOut(5)
+      
+      cEmailSession is an EmailSMTPSession
+      WITH cEmailSession
+      	.AdresseServeur = ValeurSiteParameter(PARAM_EMAIL_SERVER,"localhost")
+      	.Port = ValeurSiteParameter(PARAM_EMAIL_PORT,"25")
+      	.Nom = ValeurSiteParameter(PARAM_EMAIL_USER)
+      	.MotDePasse = ValeurSiteParameter(PARAM_EMAIL_PASSWORD)
+      	.Option = ValeurSiteParameter(PARAM_EMAIL_SMTP_OPTION)
+      END
+      
+      EmailStartSession(cEmailSession)
+      EmailSendMessage(cEmailSession,cEmail,emailOptionEncodeHeader)
+      EmailCloseSession(cEmailSession)
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : COL_SansNom1
+resources :
+ string_res :
+  identifier : 0x100696f80e88e691
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

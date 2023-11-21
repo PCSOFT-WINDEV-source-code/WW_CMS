@@ -1,0 +1,162 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : CAuthor
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x175034a512e38587
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      CAuthor is Class
+      	inhérits of CUser
+      END
+     type : 131072
+  procedures :
+   -
+     name : Manufacturer
+     procedure_id : 1679900544600409479
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructor()
+      
+     type : 589824
+   -
+     name : Destructor_
+     procedure_id : 1679900544600475015
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructor()
+      
+     type : 655360
+   -
+     name : s_ListAuthors
+     procedure_id : 1679900544600540551
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] s_ListAuthors ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	table: // None
+      //
+      PROCEDURE PUBLIC GLOBAL s_ListAuthors()
+      
+      arrAuthor is array of 8-byte int
+      
+      IF HExecuteQuery(QRY_AUTHORS) THEN
+      	FOR EACH QRY_AUTHORS 
+      		Add(arrAuthor,QRY_AUTHORS.UserAccountID)
+      	END
+      END
+      
+      RESULT arrAuthor
+     type : 458752
+   -
+     name : sCompressArticle
+     procedure_id : 1679900544600606087
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Reult> = ] sCountArticles ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	Undefined type: // 	None
+      //
+      PROCEDURE sCompressArticle()
+      
+      QRY_NUMBER_AUTHOR_ARTICLES.pAuthor = m_nUserAccountID
+      QRY_NUMBER_AUTHOR_ARTICLES.pStatus = RPT_STATUS_ARTICLE_VALIDATED
+      IF HExecuteQuery(QRY_NUMBER_AUTHOR_ARTICLES) THEN
+      	IF QRY_NUMBER_AUTHOR_ARTICLES.Count_1=1 THEN
+      		RESULT "1 item"
+      	ELSE
+      		RESULT StringBuild("%1 articles",QRY_NUMBER_AUTHOR_ARTICLES.Count_1)
+      	END
+      END
+      
+      RESULT "no article"
+     type : 458752
+   -
+     name : ListArticles
+     procedure_id : 1679900544600671623
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] ListArticles ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	table: // None
+      //
+      PROCEDURE ListArticles()
+      
+      arrProduct is array of 8-byte int
+      
+      QRY_AUTHOR_ARTICLES.pAuthor = m_nUserAccountID
+      QRY_AUTHOR_ARTICLES.pStatus = RPT_STATUS_ARTICLE_VALIDATED
+      IF HExecuteQuery(QRY_AUTHOR_ARTICLES) THEN
+      	FOR EACH QRY_AUTHOR_ARTICLES 
+      		Add(arrProduct,QRY_AUTHOR_ARTICLES.ItemID)
+      	END
+      END
+      
+      RESULT arrProduct
+      
+      
+     type : 458752
+   -
+     name : ImagePath
+     procedure_id : 1679900544600737159
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] ImagePath ([<nWidth> is int [, <nHeight> is int]])
+      //
+      // Parameters:
+      //	nWidth (integer - default value=0): <specify the role of nWidth>
+      //	nHeight (integer - default value=0): <specify the role of nHeight>
+      // Return value:
+      // 	Undefined type: // 	None
+      //
+      PROCEDURE ImagePath( nWidth is int = 0, nHeight is int = 0)
+      
+      IF m_nPhotoID=0 THEN
+      	RESULT "/"+FolderWeb()+"/images/"+DEFAULT_PHOTO
+      END
+      
+      aaParam is ASSOCIATIVE ARRAY of strings
+      aaParam["id"] = m_nPhotoID
+      IF nWidth<>0 THEN aaParam["width"] = nWidth
+      IF nHeight<>0 THEN aaParam["top"] = nHeight
+      
+      RESULT BuildURL(SET_CMS.gsURLMediaPage,aaParam)
+      
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x100696f80dc4e5c6
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

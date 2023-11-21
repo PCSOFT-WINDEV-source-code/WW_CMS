@@ -1,0 +1,134 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : get_media
+ major_version : 28
+ minor_version : 0
+ type : 65538
+ description : ""
+ subtype : 8192
+page :
+ name : get_media
+ identifier : 0x2faad9b7a6c80f8c
+ internal_properties : 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
+ properties : {}
+ type : 1
+ languages :
+  - en-GB
+ code_elements :
+  type_code : 38
+  p_codes :
+   -
+     code : |1-
+      
+     type : 851968
+   -
+     code : |1+
+      nWidth is int = PageParameter("width")
+      nHeight is int = PageParameter("top")
+      
+      //// Read a temporary image (always in the upload directory)
+      //if PageParameter("upload")<>"" then
+      //	sPath is string = SET_CMS.gsUploadDir+[fSep()]+PageParameter("upload")
+      //	if CompleteDir(fExtractPath(sPath,fDrive+fDirectory))~=CompleteDir(SET_CMS.gsUploadDir) then
+      //		filedisplay(sPath)
+      //		return
+      //	end
+      //end
+      //
+      //if PageParameter("cat")<>"" then
+      //	if HReadSeekFirst(Category,CategoryID,val(PageParameter("cat"))) THEN
+      //		IF HReadSeekFirst(Media,MediaID,Category.MediaID) THEN
+      //			// Returns the image
+      //			StringDisplay(Media.MediaContent, Media.MediaType)	
+      //			return
+      //		END
+      //	END
+      //END
+      
+      // Read an image of the media file
+      
+      IF HReadSeekFirst(Media,MediaID,PageParameter("id")) THEN
+      	img is an Image
+      	img.Image = Media.MediaContent
+      
+      	IF nWidth<>0 _OR_ nHeight<>0 THEN
+      		IF nWidth>0 _AND_ nHeight=0 THEN
+      			// Specified width - homothetic height
+      			nHeight = nWidth*img.Height / img.Width
+      			dResize(img,nWidth,nHeight,drHomothetic)
+      		ELSE
+      			IF nWidth=0 _AND_ nHeight>0 THEN
+      				// Specified height - homothetic width
+      				nWidth = nHeight*img.Width / img.Height
+      				dResize(img,nWidth,nHeight,drHomothetic)
+      			ELSE
+      				// Specified width and height
+      				dResize(img,nWidth,nHeight,drHomotheticCentered)
+      			END
+      		END
+      	END
+      
+      	StringDisplay(dSaveImagePNG(img,inMemory),"image/png",Media.MediaTitle+".png")
+      END	
+      
+      
+      
+      
+     type : 851996
+   -
+     type : 852017
+     enabled : false
+   -
+     type : 852119
+     enabled : false
+   -
+     type : 852298
+     role : N
+   -
+     type : 851999
+     role : N
+   -
+     type : 852000
+     role : N
+   -
+     type : 852232
+     enabled : false
+   -
+     type : 852167
+     enabled : false
+   -
+     type : 852169
+     role : N
+     enabled : false
+   -
+     type : 852225
+     role : N
+     enabled : false
+   -
+     type : 852227
+     enabled : false
+   -
+     type : 1310979
+     enabled : false
+   -
+     type : 852228
+     role : N
+     enabled : false
+   -
+     type : 852217
+     role : N
+     enabled : false
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : PAGE_Page1
+resources :
+ string_res :
+  identifier : 0x100696fb0eb2eefd
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+webification :
+ internal_properties : CAAAAAgAAACYzxT95H3qP7nIys4LqA==
+custom_note :
+ internal_properties : CAAAAAgAAAC68/W0/adbG0nFCRhrE42B5HRnbDzVHaz86sSQyxlBk7I=
+rad :
+ internal_properties : CAAAAAgAAABoAN7PLpwJW3EiA7WVZdCA5EwrCA1rvutcDHooMWKe

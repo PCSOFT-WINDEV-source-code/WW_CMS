@@ -1,0 +1,1436 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : WW_CMS
+ major_version : 28
+ minor_version : 0
+ type : 4097
+ description : ""
+ subtype : 0
+project :
+ identifier : 0x0
+ internal_properties : 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
+ configurations :
+  -
+    name : WW_CMS
+    internal_properties : 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
+    configuration_id : 17554202743638460677
+    type : 2
+    generation_name : WW_CMS.wdl
+    version :
+     version : 1.00Ak
+     internal_generation_version : 10
+    index_page_generation_name : home
+    language : 2
+    64bits : true
+ elements :
+  identifier : 0x4bfce3170002e21d
+  elements :
+   -
+     name : admin_categories
+     identifier : 0x4caf452f0049c843
+     internal_properties : CAAAAAgAAADDhKDHnOZwu4FdOFdjf9equSKKp45HHzjvBZl80Lr0jSvBR3vckdatkg8Ynylytk1l5SM7xcqFfH3bcWDIl06FLbd5hX8=
+     physical_name : .\admin_categories.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : QRY_LIST_MEDIA_ARTICLE
+     identifier : 0x4cb48d560030d4be
+     internal_properties : CAAAAAgAAABaMAIGpeLK1ei+iDtvs73SFlvVRXPIjntKpPY+PEvBJ+3RbmYQMqXXuWVfWdkX49U/xw==
+     physical_name : .\QRY_LIST_MEDIA_ARTICLE.WDR
+     type : 5
+   -
+     name : article
+     identifier : 0x4bfd1f10001925fa
+     internal_properties : CAAAAAgAAADWkTXwL/NtwlhEEW5K1qrd3AdX+EGECaN8Nk4DJViK4x1/EnhFbjkM5fID7Hrp8QqgmG5gojXq45SiSEnxfmGawMIMcow=
+     physical_name : .\article.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : admin_users
+     identifier : 0x4bfea17500247e4f
+     internal_properties : CAAAAAgAAAAR4prVgjSmidfLhhEhOR1gT9is3Sxln3TYq2h8Wzi2f+APIFZAUSYR9lO0208Q0GsDe0kFD4A/truZv9J6xZhTG6Vvn1E=
+     physical_name : .\admin_users.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : TEST_CMS
+     identifier : 0x4f966e85007c6d01
+     internal_properties : CAAAAAgAAAAjHxsPvOnB2vO1X2IG3vozT9JOhjtVrSpBICO08g4MhHC8QZP5CX4uwHxmUtIO6t4mLg==
+     physical_name : .\TEST_CMS.wxt
+     type : 17
+   -
+     name : admin_dashboard
+     identifier : 0x4bfe4a49001efdf9
+     internal_properties : CAAAAAgAAABVFrZ5tgjqTQuPUq2NFWkcG0QQOXgR3e9OFCuaFS54MXmZ6Q2g9UIpHku4WcWchJ/XV62hY3QrolflC44+AeQfR0mL8w0=
+     physical_name : .\admin_dashboard.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : admin_moderation
+     identifier : 0x4bfe4d6800202c81
+     internal_properties : CAAAAAgAAACGQeWA34Nd0qg04T4a5lotDLcHCHEUFpu3WaJ8o8Kw0bhZWV3xRoHY8W6/SvKhgZrQSJ6wUkX68+RymDnhbnGq8PI8Qrw=
+     physical_name : .\admin_moderation.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : QRY_ARTICLE_COMMENTS
+     identifier : 0x4cbdbe4e0031e583
+     internal_properties : CAAAAAgAAAAyCGq+jfqy7cDGoNNXEjlOtvkFBSnGOsN2gfs5qf4eOoZ07+WoWs3/kY13QcE/O60XHw==
+     physical_name : .\QRY_ARTICLE_COMMENTS.WDR
+     type : 5
+   -
+     name : admin_parameters
+     identifier : 0x4cc6e6740080c81c
+     internal_properties : CAAAAAgAAACcbx9OrdGLID7ir9j4QAB7at25zrf6iCgeATKXWuIwSQ5pDSFHDMuuk+AVZP53Y/iOjlQK9JtUTQJQ5utTHMN4PkDyHNY=
+     physical_name : .\admin_parameters.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : admin_article_edit
+     identifier : 0x4cb4894b002e0adf
+     internal_properties : CAAAAAgAAAB3aBxLIFoEL3WhdIOvu5P2xV4uQypjMOyiOPMjRK54AYXZFRmozYrhxpNQWe2+2nEJAceHiQ7BODkHLawcIzrxuTv1Ges=
+     physical_name : .\admin_article_edit.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : category
+     identifier : 0x4cb323a8002dbd83
+     internal_properties : CAAAAAgAAAAXyPwrgDqkj9XBlOPPWzNWJf7OY8oDB8eyxeI8aLJ8PY/xHwOwxZLphoNAN4ceepEpIefnKa5hWBknzcx8w5pRGZtVuUs=
+     physical_name : .\category.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : cms_connection
+     identifier : 0x46091b57010a6129
+     internal_properties : CAAAAAgAAAAVcX2hHnszbGWQqj4xFV0n/a4o2O2EBB+YNe02V8/HWa8tOifcLRopRv74wECwSLgAAA==
+     physical_name : .\cms_connection.wwh
+     type : 65538
+   -
+     name : admin_profile
+     identifier : 0x4cadd98f002b1dce
+     internal_properties : CAAAAAgAAACKVXG0YxfBViyobZrWspbp+GNL5E2A6mSfZ0zWcExeV73vnJInqP9mG+jZWOS19Q6kpGJ8hgnGPzAOJLVl6v02fAbINsg=
+     physical_name : .\admin_profile.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : PAGETPL_Home_WEB
+     identifier : 0x4bfce72d000bda8d
+     internal_properties : CAAAAAgAAABk4kxoVwwkx+6w9gVpjLMkaBun/0ckn4FWHU9XW7BslFDuUXMWNKPVu2dRr3dpEYdx8Q==
+     physical_name : .\PAGETPL_Home_WEB.wwt
+     type : 65541
+   -
+     name : cms_getpassword
+     identifier : 0x4718c62a00e691d5
+     internal_properties : CAAAAAgAAADudMba6ZaeUR2sWoaHuJTS4J3f1/o/iOV2wTeQr01H+Q8jtuv6BqTaPuHbJe3jnxH7ew==
+     physical_name : .\cms_getpassword.wwh
+     type : 65538
+   -
+     name : SET_CMS
+     identifier : 0x4caf48c8004cd6d5
+     internal_properties : CAAAAAgAAABexLZqWQYuwYRqtEcrQX1y0nMZQXBvPgmjdB5i03kTFTc/IDRU9mET5VFLtX1zD4FLyw==
+     physical_name : .\SET_CMS.wdg
+     type : 7
+   -
+     name : get_media
+     identifier : 0x4cbc555f008af50e
+     internal_properties : CAAAAAgAAAAtPm6hfkASBROHWrWFHXEU47wY0RDZQLhwKpIBKCZwAcsp/XEaf8izVIG613vkPNfvb7Wpa2wjml/9E4Y2OSznjxHDyyU=
+     physical_name : .\get_media.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : QRY_ARTICLES
+     identifier : 0x4bfcec04000fc0bf
+     internal_properties : CAAAAAgAAACY9kBcaxAYw5psskElX2/YpPWzm5V69AGy0o6uALdlo621jkZa6F8R51NNq2tlHZN9hQ==
+     physical_name : .\QRY_ARTICLES.WDR
+     type : 5
+   -
+     name : admin_articles
+     identifier : 0x4cbc664a00310bf0
+     internal_properties : CAAAAAgAAAB9Dr4RTnDiNQPXiuX1TQFEc8yowSDJY5oixXx34PpU3QMBF2skCd5FegfY32/8LMf/f0UZ+5xTSg8tw9ZGCdwXX2GT+/U=
+     physical_name : .\admin_articles.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : COL_Email
+     identifier : 0x4faad22300b8754f
+     internal_properties : CAAAAAgAAADKQDLW1ZKaRRjuOMtf243yZns1NfROmuWY/T9XLdO5DyXZpq7gYtWHadXPKennkwXPVw==
+     physical_name : .\COL_Email.wdg
+     type : 7
+   -
+     name : QRY_LAST_ARTICLES
+     identifier : 0x4cbda59f00317670
+     internal_properties : CAAAAAgAAADAvjhkQzhwq4KEWmk9uqP0FAsTSws4dxaKFA8lKW4u+jLss5ECAHcpz0u1A4N9BfvFTQ==
+     physical_name : .\QRY_LAST_ARTICLES.WDR
+     type : 5
+   -
+     name : QRY_NbComments
+     identifier : 0x4ca5f437002e7976
+     internal_properties : CAAAAAgAAADYtoCcK1DYg1oscoHlEy8QBCVTm7VyA2JOb4ri7Ktht0n5SgqaqB9RJxONayulXVO9RQ==
+     physical_name : .\QRY_NbComments.WDR
+     type : 5
+   -
+     name : QRY_ArticleWaitForModeration
+     identifier : 0x4cd9260e002f56f8
+     internal_properties : CAAAAAgAAAAnIw8TkM1lBi/hO86i0epLU8wOfsxhA6FSWiLKGo0B122j/sbdbdqKbKgS7rYq1soyMg==
+     physical_name : .\QRY_ArticleWaitForModeration.WDR
+     type : 5
+   -
+     name : admin_media
+     identifier : 0x4cc84a75002e6fcd
+     internal_properties : CAAAAAgAAABNHk4BXiCyZfMn+hUlPRF0Q9y48bD5wcPQ2uBvxG74gXGZOb3IrWrBpgMUhd2MXPePj1UJC4xDur+dsyaW2YxHb3Gj6wU=
+     physical_name : .\admin_media.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : rss
+     identifier : 0x4ca9a4d100235529
+     internal_properties : CAAAAAgAAABpahJdCmwOob9jLll5wYX491A0dcRtveH1gXz3wqzaU1a/clgcXaqVct9w/00YyGMbE9GNdxjXzoPRZ2rSnUD7oy3nF+k=
+     physical_name : .\rss.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : simple_article
+     identifier : 0x4fb94e39003ae911
+     internal_properties : CAAAAAgAAABSLVkMWx/ZXiSwZbKeai5RUOvDTDV47FomUBoHpczeJ2mfaI4PgEcey9jdSpjF3XYMDNr0HrFuZ2j2HL1t8vUudH6w3hA=
+     physical_name : .\simple_article.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : home
+     identifier : 0x4bfcf0f7001114cf
+     internal_properties : CAAAAAgAAACC9bRJudlMsFVPwuqKtbLd1jRbdjfPGhuMWEZ0dnCDjTz/zBpdXxehwSaLDIEryJ2K8Vov2exX+DXkUJryEi06+Y59dg==
+     physical_name : .\home.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : cms_registration
+     identifier : 0x46091bb3010cc7be
+     internal_properties : CAAAAAgAAADiWNrO/aoCHSRfbU10KpBJTN1Lgyyrer6AsxcEZ4+NC/U9XXqNtN9shb0nkRHPqx3nbw==
+     physical_name : .\cms_registration.wwh
+     type : 65538
+   -
+     name : PAGETPL_Simple_Admin
+     identifier : 0x40f575de00544fec
+     internal_properties : CAAAAAgAAAB716PnxIGpsoudVxoO9kLLN1oGzvOMk3dKjXI7Sqb0LNhkOavxEYY22ES+Ovr2gnZe5g==
+     physical_name : .\PAGETPL_Simple_Admin.wwt
+     type : 65541
+   -
+     name : CCategory
+     identifier : 0x4603fc4400cdf0b8
+     internal_properties : CAAAAAgAAAC+pJaKOWZOYWht7irpiflTeMu378y+IXFDwl5wAACcBOA+WoZapu4SSfHr1V2Tb2Grqw==
+     physical_name : .\CCategory.wdc
+     type : 4
+   -
+     name : TPLC_Category_TreeView
+     identifier : 0x460409210153304e
+     internal_properties : CAAAAAgAAAAZdcHF4l/X2OEXqlZ96gaSuSYcTH8RyrCF1xRDt0lVU70HJZulHHVAwnpkXCTcpBT8BA==
+     physical_name : .\TPLC_Category_TreeView.wwt
+     type : 65543
+   -
+     name : CArticle
+     identifier : 0x46040f3c01550726
+     internal_properties : CAAAAAgAAAALB3MXlNFZAs8B3kv7Wu0OuSpEpBtdf+uff5kFnUPLHdMJwzQuy2HerJQO6qom0sYOFg==
+     physical_name : .\CArticle.wdc
+     type : 4
+   -
+     name : author
+     identifier : 0x460420dc0185e288
+     internal_properties : CAAAAAgAAADEQ26rm+M+4mcBsJx4ByxvqGr/BrrW8SJFl2pt4cIZf40H9h6964Uf1/gUTvz5m+Pe6yTVJ17FZqeWgqjAJBMc2+jHvA==
+     physical_name : .\author.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : TPLC_Article_List
+     identifier : 0x4604241d018d99e7
+     internal_properties : CAAAAAgAAAAWfH6iAX42OYD2OE3acSwsgKHPV2oUM5lERtj/iYcNM9V9brvRaOUj4VlDvUW7R7kDAw==
+     physical_name : .\TPLC_Article_List.wwt
+     type : 65543
+   -
+     name : authors
+     identifier : 0x460518e900cdd947
+     internal_properties : CAAAAAgAAAC4luA8C7D4Iy4h5GVLY46SXgNNLSJdyjeshUjIs1M5P8VJPiutC376i7MtiwvFvTOdpQ==
+     physical_name : .\authors.wwh
+     type : 65538
+   -
+     name : CAuthor
+     identifier : 0x4605435f00dfb6b4
+     internal_properties : CAAAAAgAAACW/P4igf62uQB3WUUPGUGJvjFdrRJkh79b7CC+VrpSplqQwOYI+IekYdnDPcU7xzmDgw==
+     physical_name : .\CAuthor.wdc
+     type : 4
+   -
+     name : QRY_AUTHORS
+     identifier : 0x460543c100e233a0
+     internal_properties : CAAAAAgAAACNieU5hvO75P00Mjgw9dnQVfagMIbLWoq2MQwoiO+nqa+9gTK9Q+4NnoZwSMg4wDCYmA==
+     physical_name : .\QRY_AUTHORS.WDR
+     type : 5
+   -
+     name : QRY_NUMBER_AUTHOR_ARTICLES
+     identifier : 0x460552d000f407bf
+     internal_properties : CAAAAAgAAAAbd8PH5KEJEt9SY6GEu2XP274awn5LK4FWXRkTKZ70NJhkGe4b7eOvfKQemhrWohb+Bg==
+     physical_name : .\QRY_NUMBER_AUTHOR_ARTICLES.WDR
+     type : 5
+   -
+     name : QRY_AUTHOR_ARTICLES
+     identifier : 0x4605585400fb933f
+     internal_properties : CAAAAAgAAAApJRF1su/H6PE4y6veNHcxCVYsvHZLRFx25VqSrhkFw03Xpv3/wVMRkop0TNQM9OQsNA==
+     physical_name : .\QRY_AUTHOR_ARTICLES.WDR
+     type : 5
+   -
+     name : QRY_CATEGORY_ARTICLE
+     identifier : 0x460575db010fea3a
+     internal_properties : CAAAAAgAAAD5VSFlQj93eMEISBaxgkJwN0p2LqqPScuO10kjCZ78JMBc3J5yj6zhopoE/IR8BPTcZA==
+     physical_name : .\QRY_CATEGORY_ARTICLE.WDR
+     type : 5
+   -
+     name : CComment
+     identifier : 0x46057e030120c7c2
+     internal_properties : CAAAAAgAAADySCp+zbryLTR7SKFaREhlNGdTmyiiFQVD4nZgMNBE1CimPIuQqYrYVc03gQH/++3XXw==
+     physical_name : .\CComment.wdc
+     type : 4
+   -
+     name : CMedia
+     identifier : 0x460c000500e5322c
+     internal_properties : CAAAAAgAAAAR7Uldahcf0JkHyUY6GlJCN1BicsHrhZGnXaf3H/ElK9Ffr4NTtVDwumJcpGxkHIx0/A==
+     physical_name : .\CMedia.wdc
+     type : 4
+   -
+     name : PAGETPL_ImagePicker
+     identifier : 0x4665688700e48f77
+     internal_properties : CAAAAAgAAAB51aHlwr/3+EHoK17enaXvV9CCEqHLC5xYxVBHz0HVe4GvqtUcJJPBIhqEfAT8hHRc5A==
+     physical_name : .\PAGETPL_ImagePicker.wwt
+     type : 65541
+   -
+     name : TPLC_Category_Combo
+     identifier : 0x4665a05c00f7a646
+     internal_properties : CAAAAAgAAADEQiwIt+zE5/KVkEw/ARnzouXx4VYIcM6wl20iQt42Ot5s3tge4npun4dxT9cJ8efRUQ==
+     physical_name : .\TPLC_Category_Combo.wwt
+     type : 65543
+   -
+     name : QRY_ListMediaFamilies
+     identifier : 0x4665b9ff010fc92a
+     internal_properties : CAAAAAgAAAAXc3+jAH01NoNWvlA/CD/2YT6E1G7ThomixpLibil1g3130Yh0jeKD4FhCvka6RroCAg==
+     physical_name : .\QRY_ListMediaFamilies.WDR
+     type : 5
+   -
+     name : cms_disconnection
+     identifier : 0x4718a4e601069efd
+     internal_properties : CAAAAAgAAAAhHRkNuufP4OI9+evtvYIfuciAKKA1I5SyWp3PqU7EdIScQ1uUrfmrz3JsVNwU7NwkLA==
+     physical_name : .\cms_disconnection.wwh
+     type : 65538
+  other_elements : []
+  analysis : .\WW_CMS.ana\WW_CMS.wda
+  net_assemblies : []
+  uwp_api : []
+  external_components : []
+  internal_components :
+   -
+     physical_name : .\CompteInternet\InternetAccount.wci
+   -
+     physical_name : .\SiteUtility\SiteUtility.wci
+ common_generation_directory : true
+ wb_skin : 190 Evolution
+ wb_color_palette : GreenVolution
+ languages :
+  - en-GB
+ wd_style_sheet : .\WWManagingContent.sty
+ site_map :
+  roots : []
+  orphans :
+   -
+     name : activation
+     parameters : []
+     title :
+      fr-FR : activation
+      en-GB : Managing the articles
+     description :
+      fr-FR : activation
+      en-GB : Managing the articles
+   -
+     name : admin_article_edit
+     parameters : []
+     title :
+      fr-FR : Edition d'un article
+      en-GB : See an article
+     description :
+      fr-FR : Edition d'un article
+      en-GB : See an article
+   -
+     name : admin_article_edit
+     parameters : []
+     title :
+      fr-FR : Editer un article
+      en-GB : PAGE_ARTICLE
+     description :
+      fr-FR : Editer un article
+      en-GB : PAGE_ARTICLE
+   -
+     name : admin_article_edit
+     parameters : []
+     title :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : PAGE_ARTICLE
+     description :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : PAGE_ARTICLE
+   -
+     name : admin_article_edit
+     parameters : []
+     title :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : Read an article
+     description :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : Read an article
+   -
+     name : admin_article_edit
+     parameters : []
+     title :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : PAGE_ARTICLE
+     description :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : PAGE_ARTICLE
+   -
+     name : admin_article_edit
+     parameters : []
+     title :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : Editing an article
+     description :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : Editing an article
+   -
+     name : admin_article_edit
+     parameters : []
+     title :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : Editing an article
+     description :
+      fr-FR : PAGE_EDITION_ARTICLE
+      en-GB : Editing an article
+   -
+     name : admin_article_edit
+     parameters : []
+     title :
+      fr-FR : Edition d'un article
+      en-GB : PAGE_EDIT_ARTICLE
+     description :
+      fr-FR : Edition d'un article
+      en-GB : PAGE_EDIT_ARTICLE
+   -
+     name : admin_articles
+     parameters : []
+     title :
+      fr-FR : Gestion des articles
+      en-GB : activation
+     description :
+      fr-FR : Gestion des articles
+      en-GB : activation
+   -
+     name : admin_articles
+     parameters : []
+     title :
+      fr-FR : Gestion des articles
+      en-GB : Managing the articles
+     description :
+      fr-FR : Gestion des articles
+      en-GB : Managing the articles
+   -
+     name : admin_articles
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_ARTICLE
+      en-GB : Modifying an article
+     description :
+      fr-FR : PAGE_GESTION_ARTICLE
+      en-GB : Modifying an article
+   -
+     name : admin_articles
+     parameters : []
+     title :
+      fr-FR : Modification d'un article
+      en-GB : PAGE_MANAGE_ARTICLE
+     description :
+      fr-FR : Modification d'un article
+      en-GB : PAGE_MANAGE_ARTICLE
+   -
+     name : admin_articles
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_ARTICLE
+      en-GB : PAGE_MANAGE_ARTICLE
+     description :
+      fr-FR : PAGE_GESTION_ARTICLE
+      en-GB : PAGE_MANAGE_ARTICLE
+   -
+     name : admin_articles
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_ARTICLE
+      en-GB : PAGE_MANAGE_ARTICLE
+     description :
+      fr-FR : PAGE_GESTION_ARTICLE
+      en-GB : PAGE_MANAGE_ARTICLE
+   -
+     name : admin_articles
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_ARTICLE
+      en-GB : Modifying an article
+     description :
+      fr-FR : PAGE_GESTION_ARTICLE
+      en-GB : Modifying an article
+   -
+     name : admin_articles
+     parameters : []
+     title :
+      fr-FR : Modification d'un article
+      en-GB : PAGE_MANAGE_ARTICLE
+     description :
+      fr-FR : Modification d'un article
+      en-GB : PAGE_MANAGE_ARTICLE
+   -
+     name : admin_categories
+     parameters : []
+     title :
+      fr-FR : Gestion des catégories
+      en-GB : List of authors
+     description :
+      fr-FR : Gestion des catégories
+      en-GB : List of authors
+   -
+     name : admin_categories
+     parameters : []
+     title :
+      fr-FR : Gestion des catégories
+      en-GB : Managing the categories
+     description :
+      fr-FR : Gestion des catégories
+      en-GB : Managing the categories
+   -
+     name : admin_categories
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : Managing the categories
+     description :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : Managing the categories
+   -
+     name : admin_categories
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : PAGE_MANAGE_CATEGORIES
+     description :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : PAGE_MANAGE_CATEGORIES
+   -
+     name : admin_categories
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : PAGE_MANAGE_CATEGORIES
+     description :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : PAGE_MANAGE_CATEGORIES
+   -
+     name : admin_categories
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : PAGE_MANAGE_CATEGORIES
+     description :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : PAGE_MANAGE_CATEGORIES
+   -
+     name : admin_categories
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : PAGE_MANAGE_CATEGORIES
+     description :
+      fr-FR : PAGE_GESTION_CATEGORIES
+      en-GB : PAGE_MANAGE_CATEGORIES
+   -
+     name : admin_categories
+     parameters : []
+     title :
+      fr-FR : Gestion des catégories
+      en-GB : PAGE_MANAGE_CATEGORIES
+     description :
+      fr-FR : Gestion des catégories
+      en-GB : PAGE_MANAGE_CATEGORIES
+   -
+     name : admin_dashboard
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil_ADMIN
+      en-GB : Dashboard
+     description :
+      fr-FR : PAGE_Accueil_ADMIN
+      en-GB : Dashboard
+   -
+     name : admin_dashboard
+     parameters : []
+     title :
+      fr-FR : Administration
+      en-GB : PAGE_Home_ADMIN
+     description :
+      fr-FR : Administration
+      en-GB : PAGE_Home_ADMIN
+   -
+     name : admin_dashboard
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil_ADMIN
+      en-GB : Home
+     description :
+      fr-FR : PAGE_Accueil_ADMIN
+      en-GB : Home
+   -
+     name : admin_dashboard
+     parameters : []
+     title :
+      fr-FR : Administration
+      en-GB : PAGE_Home_ADMIN
+     description :
+      fr-FR : Administration
+      en-GB : PAGE_Home_ADMIN
+   -
+     name : admin_dashboard
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil_ADMIN
+      en-GB : Management
+     description :
+      fr-FR : PAGE_Accueil_ADMIN
+      en-GB : Management
+   -
+     name : admin_dashboard
+     parameters : []
+     title :
+      fr-FR : Accueil
+      en-GB : PAGE_Home_ADMIN
+     description :
+      fr-FR : Accueil
+      en-GB : PAGE_Home_ADMIN
+   -
+     name : admin_dashboard
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil_ADMIN
+      en-GB : Management
+     description :
+      fr-FR : PAGE_Accueil_ADMIN
+      en-GB : Management
+   -
+     name : admin_dashboard
+     parameters : []
+     title :
+      fr-FR : Tableau de bord
+      en-GB : Author articles
+     description :
+      fr-FR : Tableau de bord
+      en-GB : Author articles
+   -
+     name : admin_media
+     parameters : []
+     title :
+      fr-FR : Gestion des images
+      en-GB : Management of images
+     description :
+      fr-FR : Gestion des images
+      en-GB : Management of images
+   -
+     name : admin_media
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_MEDIA
+      en-GB : PAGE_MANAGE_MEDIA
+     description :
+      fr-FR : PAGE_GESTION_MEDIA
+      en-GB : PAGE_MANAGE_MEDIA
+   -
+     name : admin_media
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_MEDIA
+      en-GB : PAGE_MANAGE_MEDIA
+     description :
+      fr-FR : PAGE_GESTION_MEDIA
+      en-GB : PAGE_MANAGE_MEDIA
+   -
+     name : admin_moderation
+     parameters : []
+     title :
+      fr-FR : Modération
+      en-GB : Moderation
+     description :
+      fr-FR : Modération
+      en-GB : Moderation
+   -
+     name : admin_moderation
+     parameters : []
+     title :
+      fr-FR : Modération des articles
+      en-GB : Moderating the articles
+     description :
+      fr-FR : Modération des articles
+      en-GB : Moderating the articles
+   -
+     name : admin_moderation
+     parameters : []
+     title :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+     description :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+   -
+     name : admin_moderation
+     parameters : []
+     title :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+     description :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+   -
+     name : admin_moderation
+     parameters : []
+     title :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+     description :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+   -
+     name : admin_moderation
+     parameters : []
+     title :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+     description :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+   -
+     name : admin_moderation
+     parameters : []
+     title :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+     description :
+      fr-FR : PAGE_MODERATION
+      en-GB : PAGE_MODERATION
+   -
+     name : admin_moderation
+     parameters : []
+     title :
+      fr-FR : Modération des articles
+      en-GB : Moderating the articles
+     description :
+      fr-FR : Modération des articles
+      en-GB : Moderating the articles
+   -
+     name : admin_parameters
+     parameters : []
+     title :
+      fr-FR : Paramétrage du site
+      en-GB : Configuring the site
+     description :
+      fr-FR : Paramétrage du site
+      en-GB : Configuring the site
+   -
+     name : admin_parameters
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_PARAMETRE
+      en-GB : Configuring the site
+     description :
+      fr-FR : PAGE_GESTION_PARAMETRE
+      en-GB : Configuring the site
+   -
+     name : admin_parameters
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_PARAMETRE
+      en-GB : PAGE_MANAGE_PARAMETER
+     description :
+      fr-FR : PAGE_GESTION_PARAMETRE
+      en-GB : PAGE_MANAGE_PARAMETER
+   -
+     name : admin_parameters
+     parameters : []
+     title :
+      fr-FR : Paramétrage du site
+      en-GB : PAGE_MANAGE_PARAMETER
+     description :
+      fr-FR : Paramétrage du site
+      en-GB : PAGE_MANAGE_PARAMETER
+   -
+     name : admin_parameters
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_PARAMETRE
+      en-GB : Configuring the site
+     description :
+      fr-FR : PAGE_GESTION_PARAMETRE
+      en-GB : Configuring the site
+   -
+     name : admin_parameters
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_PARAMETRE
+      en-GB : PAGE_MANAGE_PARAMETER
+     description :
+      fr-FR : PAGE_GESTION_PARAMETRE
+      en-GB : PAGE_MANAGE_PARAMETER
+   -
+     name : admin_parameters
+     parameters : []
+     title :
+      fr-FR : Paramétrage du site
+      en-GB : PAGE_MANAGE_PARAMETER
+     description :
+      fr-FR : Paramétrage du site
+      en-GB : PAGE_MANAGE_PARAMETER
+   -
+     name : admin_profile
+     parameters : []
+     title :
+      fr-FR : Données personnelles
+      en-GB : Personal data
+     description :
+      fr-FR : Données personnelles
+      en-GB : Personal data
+   -
+     name : admin_profile
+     parameters : []
+     title :
+      fr-FR : Données personnelles
+      en-GB : Managing my personal data
+     description :
+      fr-FR : Données personnelles
+      en-GB : Managing my personal data
+   -
+     name : admin_profile
+     parameters : []
+     title :
+      fr-FR : PAGE_DONNEES_PERSONNELLES
+      en-GB : PAGE_PERSONAL_DATA
+     description :
+      fr-FR : PAGE_DONNEES_PERSONNELLES
+      en-GB : PAGE_PERSONAL_DATA
+   -
+     name : admin_profile
+     parameters : []
+     title :
+      fr-FR : Gestion de mes données personnelles
+      en-GB : PAGE_PERSONAL_DATA
+     description :
+      fr-FR : Gestion de mes données personnelles
+      en-GB : PAGE_PERSONAL_DATA
+   -
+     name : admin_profile
+     parameters : []
+     title :
+      fr-FR : PAGE_DONNEES_PERSONNELLES
+      en-GB : PAGE_PERSONAL_DATA
+     description :
+      fr-FR : PAGE_DONNEES_PERSONNELLES
+      en-GB : PAGE_PERSONAL_DATA
+   -
+     name : admin_profile
+     parameters : []
+     title :
+      fr-FR : PAGE_DONNEES_PERSONNELLES
+      en-GB : Managing my personal data
+     description :
+      fr-FR : PAGE_DONNEES_PERSONNELLES
+      en-GB : Managing my personal data
+   -
+     name : admin_profile
+     parameters : []
+     title :
+      fr-FR : PAGE_DONNEES_PERSONNELLES
+      en-GB : PAGE_PERSONAL_DATA
+     description :
+      fr-FR : PAGE_DONNEES_PERSONNELLES
+      en-GB : PAGE_PERSONAL_DATA
+   -
+     name : admin_profile
+     parameters : []
+     title :
+      fr-FR : Gestion de mes données personnelles
+      en-GB : Personal data
+     description :
+      fr-FR : Gestion de mes données personnelles
+      en-GB : Personal data
+   -
+     name : admin_users
+     parameters : []
+     title :
+      fr-FR : Gestion des utilisateurs
+      en-GB : Connection
+     description :
+      fr-FR : Gestion des utilisateurs
+      en-GB : Connection
+   -
+     name : admin_users
+     parameters : []
+     title :
+      fr-FR : Gestion des utilisateurs
+      en-GB : Managing the users
+     description :
+      fr-FR : Gestion des utilisateurs
+      en-GB : Managing the users
+   -
+     name : admin_users
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : Managing the users
+     description :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : Managing the users
+   -
+     name : admin_users
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : PAGE_USER_MANAGEMENT
+     description :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : PAGE_USER_MANAGEMENT
+   -
+     name : admin_users
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : PAGE_USER_MANAGEMENT
+     description :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : PAGE_USER_MANAGEMENT
+   -
+     name : admin_users
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : PAGE_USER_MANAGEMENT
+     description :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : PAGE_USER_MANAGEMENT
+   -
+     name : admin_users
+     parameters : []
+     title :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : PAGE_USER_MANAGEMENT
+     description :
+      fr-FR : PAGE_GESTION_UTILISATEUR
+      en-GB : PAGE_USER_MANAGEMENT
+   -
+     name : admin_users
+     parameters : []
+     title :
+      fr-FR : Gestion des utilisateurs
+      en-GB : PAGE_USER_MANAGEMENT
+     description :
+      fr-FR : Gestion des utilisateurs
+      en-GB : PAGE_USER_MANAGEMENT
+   -
+     name : article
+     parameters : []
+     title :
+      fr-FR : Consultation d'un article
+      en-GB : PAGE_EDIT_ARTICLE
+     description :
+      fr-FR : Consultation d'un article
+      en-GB : PAGE_EDIT_ARTICLE
+   -
+     name : article
+     parameters : []
+     title :
+      fr-FR : PAGE_ARTICLE
+      en-GB : PAGE_EDIT_ARTICLE
+     description :
+      fr-FR : PAGE_ARTICLE
+      en-GB : PAGE_EDIT_ARTICLE
+   -
+     name : article
+     parameters : []
+     title :
+      fr-FR : Lecture d'un article
+      en-GB : PAGE_EDIT_ARTICLE
+     description :
+      fr-FR : Lecture d'un article
+      en-GB : PAGE_EDIT_ARTICLE
+   -
+     name : article
+     parameters : []
+     title :
+      fr-FR : PAGE_ARTICLE
+      en-GB : PAGE_EDIT_ARTICLE
+     description :
+      fr-FR : PAGE_ARTICLE
+      en-GB : PAGE_EDIT_ARTICLE
+   -
+     name : article
+     parameters : []
+     title :
+      fr-FR : PAGE_ARTICLE
+      en-GB : Edit an article
+     description :
+      fr-FR : PAGE_ARTICLE
+      en-GB : Edit an article
+   -
+     name : author
+     parameters : []
+     title :
+      fr-FR : Articles d'un auteur
+      en-GB : PAGE_Home_ADMIN
+     description :
+      fr-FR : Articles d'un auteur
+      en-GB : PAGE_Home_ADMIN
+   -
+     name : authors
+     parameters : []
+     title :
+      fr-FR : Liste des auteurs
+      en-GB : simple_article
+     description :
+      fr-FR : Liste des auteurs
+      en-GB : simple_article
+   -
+     name : category
+     parameters : []
+     title :
+      fr-FR : Articles d'une catégorie
+      en-GB : Articles of a category
+     description :
+      fr-FR : Articles d'une catégorie
+      en-GB : Articles of a category
+   -
+     name : category
+     parameters : []
+     title :
+      fr-FR : PAGE_Categorie
+      en-GB : PAGE_Category
+     description :
+      fr-FR : PAGE_Categorie
+      en-GB : PAGE_Category
+   -
+     name : category
+     parameters : []
+     title :
+      fr-FR : Articles d'une catégorie
+      en-GB : PAGE_Category
+     description :
+      fr-FR : Articles d'une catégorie
+      en-GB : PAGE_Category
+   -
+     name : category
+     parameters : []
+     title :
+      fr-FR : PAGE_Categorie
+      en-GB : Articles of a category
+     description :
+      fr-FR : PAGE_Categorie
+      en-GB : Articles of a category
+   -
+     name : category
+     parameters : []
+     title :
+      fr-FR : PAGE_Categorie
+      en-GB : PAGE_Category
+     description :
+      fr-FR : PAGE_Categorie
+      en-GB : PAGE_Category
+   -
+     name : cms_connection
+     parameters : []
+     title :
+      fr-FR : Connexion
+      en-GB : Retrieving the password
+     description :
+      fr-FR : Connexion
+      en-GB : Retrieving the password
+   -
+     name : cms_disconnection
+     parameters : []
+     title :
+      fr-FR : Déconnexion
+      en-GB : Disconnection
+     description :
+      fr-FR : Déconnexion
+      en-GB : Disconnection
+   -
+     name : cms_registration
+     parameters : []
+     title :
+      fr-FR : Inscription
+      en-GB : Registration
+     description :
+      fr-FR : Inscription
+      en-GB : Registration
+   -
+     name : connexion
+     parameters : []
+     title :
+      fr-FR : PAGE_CONNEXION
+      en-GB : PAGE_CONNECTION
+     description :
+      fr-FR : PAGE_CONNEXION
+      en-GB : PAGE_CONNECTION
+   -
+     name : connexion
+     parameters : []
+     title :
+      fr-FR : PAGE_CONNEXION
+      en-GB : PAGE_CONNECTION
+     description :
+      fr-FR : PAGE_CONNEXION
+      en-GB : PAGE_CONNECTION
+   -
+     name : deconnexion
+     parameters : []
+     title :
+      fr-FR : Deconnexion
+      en-GB : Displaying an error
+     description :
+      fr-FR : Deconnexion
+      en-GB : Displaying an error
+   -
+     name : displayerror
+     parameters : []
+     title :
+      fr-FR : Affichage d'une erreur
+      en-GB : Disconnection
+     description :
+      fr-FR : Affichage d'une erreur
+      en-GB : Disconnection
+   -
+     name : espace_perso_defaut
+     parameters : []
+     title :
+      fr-FR : Espace personnel
+      en-GB : Custom section
+     description :
+      fr-FR : Espace personnel
+      en-GB : Custom section
+   -
+     name : gestion_utilisateur
+     parameters : []
+     title :
+      fr-FR : Gestion des utilisateurs
+      en-GB : Home
+     description :
+      fr-FR : Gestion des utilisateurs
+      en-GB : Home
+   -
+     name : get_media
+     parameters : []
+     title :
+      fr-FR : PAGE_GetMedia
+      en-GB : PAGE_GetMedia
+     description :
+      fr-FR : PAGE_GetMedia
+      en-GB : PAGE_GetMedia
+   -
+     name : home
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil
+      en-GB : Managing the users
+     description :
+      fr-FR : PAGE_Accueil
+      en-GB : Managing the users
+   -
+     name : home
+     parameters : []
+     title :
+      fr-FR : Accueil
+      en-GB : PAGE_Home
+     description :
+      fr-FR : Accueil
+      en-GB : PAGE_Home
+   -
+     name : home
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil
+      en-GB : Home
+     description :
+      fr-FR : PAGE_Accueil
+      en-GB : Home
+   -
+     name : home
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil
+      en-GB : Home
+     description :
+      fr-FR : PAGE_Accueil
+      en-GB : Home
+   -
+     name : home
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil
+      en-GB : PAGE_Home
+     description :
+      fr-FR : PAGE_Accueil
+      en-GB : PAGE_Home
+   -
+     name : home
+     parameters : []
+     title :
+      fr-FR : PAGE_Accueil
+      en-GB : PAGE_Home
+     description :
+      fr-FR : PAGE_Accueil
+      en-GB : PAGE_Home
+   -
+     name : home
+     parameters : []
+     title :
+      fr-FR : Accueil
+      en-GB : PAGE_Home
+     description :
+      fr-FR : Accueil
+      en-GB : PAGE_Home
+   -
+     name : home
+     parameters : []
+     title :
+      fr-FR : Accueil
+      en-GB : PAGE_Home
+     description :
+      fr-FR : Accueil
+      en-GB : PAGE_Home
+   -
+     name : inscription
+     parameters : []
+     title :
+      fr-FR : PAGE_Inscription
+      en-GB : PAGE_Registration
+     description :
+      fr-FR : PAGE_Inscription
+      en-GB : PAGE_Registration
+   -
+     name : inscription
+     parameters : []
+     title :
+      fr-FR : Inscription
+      en-GB : Registration
+     description :
+      fr-FR : Inscription
+      en-GB : Registration
+   -
+     name : inscription
+     parameters : []
+     title :
+      fr-FR : PAGE_Inscription
+      en-GB : PAGE_RSS
+     description :
+      fr-FR : PAGE_Inscription
+      en-GB : PAGE_RSS
+   -
+     name : inscription
+     parameters : []
+     title :
+      fr-FR : Inscription
+      en-GB : PAGE_RSS
+     description :
+      fr-FR : Inscription
+      en-GB : PAGE_RSS
+   -
+     name : inscription
+     parameters : []
+     title :
+      fr-FR : PAGE_Inscription
+      en-GB : PAGE_RSS
+     description :
+      fr-FR : PAGE_Inscription
+      en-GB : PAGE_RSS
+   -
+     name : inscription
+     parameters : []
+     title :
+      fr-FR : PAGE_Inscription
+      en-GB : PAGE_RSS
+     description :
+      fr-FR : PAGE_Inscription
+      en-GB : PAGE_RSS
+   -
+     name : inscription
+     parameters : []
+     title :
+      fr-FR : Inscription
+      en-GB : PAGE_RSS
+     description :
+      fr-FR : Inscription
+      en-GB : PAGE_RSS
+   -
+     name : mon_profil
+     parameters : []
+     title :
+      fr-FR : Edition du profil utilisateur
+      en-GB : Editing the user profile
+     description :
+      fr-FR : Edition du profil utilisateur
+      en-GB : Editing the user profile
+   -
+     name : recupmotdepasse
+     parameters : []
+     title :
+      fr-FR : Récupération du mot de passe
+      en-GB : Managing the users
+     description :
+      fr-FR : Récupération du mot de passe
+      en-GB : Managing the users
+   -
+     name : rss
+     parameters : []
+     title :
+      fr-FR : PAGE_RSS
+      en-GB : PAGE_Registration
+     description :
+      fr-FR : PAGE_RSS
+      en-GB : PAGE_Registration
+   -
+     name : rss
+     parameters : []
+     title :
+      fr-FR : PAGE_RSS
+      en-GB : Registration
+     description :
+      fr-FR : PAGE_RSS
+      en-GB : Registration
+   -
+     name : rss
+     parameters : []
+     title :
+      fr-FR : PAGE_RSS
+      en-GB : PAGE_Registration
+     description :
+      fr-FR : PAGE_RSS
+      en-GB : PAGE_Registration
+   -
+     name : rss
+     parameters : []
+     title :
+      fr-FR : PAGE_RSS
+      en-GB : PAGE_Registration
+     description :
+      fr-FR : PAGE_RSS
+      en-GB : PAGE_Registration
+   -
+     name : rss
+     parameters : []
+     title :
+      fr-FR : PAGE_RSS
+      en-GB : Registration
+     description :
+      fr-FR : PAGE_RSS
+      en-GB : Registration
+   -
+     name : simple_article
+     parameters : []
+     title :
+      fr-FR : article_simple
+      en-GB : Managing the categories
+     description :
+      fr-FR : article_simple
+      en-GB : Managing the categories
+ url_rewriting :
+  internal_properties : CAAAAAgAAADkPzcUdUUS7wCiun+MCjqYH70RJdzkSv/nRvXZ3ENdikMa6bcHtsAH
+ code_elements :
+  internal_properties : CAAAAAgAAABseimUYz4VdXZ8hGsGFqoxLDfDcHkNZdBf0iQg2FQcqmw5VrO2lryVMt3efm9RagPlXJBReauIsX3ZdB8=
+  type_code : 0
+  p_codes :
+   -
+     code : |1+
+      WHEN EXCEPTION 
+      	fSaveText("C:\WebDev\21.0\TmpUpload\exception"+GetGUID()+".txt",ExceptionInfo(errFullDetails))
+      END
+     type : 196608
+   -
+     code : |1+
+      // Configures the AWP context in disk mode with transmission of context ID via cookie (or via the URL if the cookies are not available)
+      ConfigureAWPContext(ctxDisk,ctxIDCookieURL)
+      
+      // Initialize the set of utility procedures
+      IF SET_SiteUtility.bInitUtility() THEN
+      	// During the first initialization, we must assign the variables to customize
+      	// then, they will be stored in the AWP context
+      	IF ValeurSiteParameter(CMS_PUBLIC_URL)<>"" THEN
+      		SET_SiteUtility.gsSiteURLDatabase = ValeurSiteParameter(CMS_PUBLIC_URL)
+      	END
+      END
+      
+      // Initialize the set of procedures of CMS
+      IF SET_CMS.bInitCMS() THEN
+      	// During the first initialization, we must assign the variables to customize
+      	// then, they will be stored in the AWP context
+      END
+      
+      // Initialize the set of procedures for managing the user accounts
+      IF COL_ManageAccount.bInitializeManagementInternetAccount() THEN
+      	// During the first initialization, we must assign the variables to customize
+      	// then, they will be stored in the AWP context
+      	COL_ManageAccount.gsURLHomePage = ExtractString(PageAddress(home),1,"?")
+      	COL_ManageAccount.gsURLConnectionPage = ExtractString(PageAddress(cms_connection),1,"?")
+      	COL_ManageAccount.gsURLDisconnectionPage = ExtractString(PageAddress(cms_disconnection),1,"?")
+      	COL_ManageAccount.gsURLRegistrationPage = ExtractString(PageAddress(cms_registration),1,"?")
+      	COL_ManageAccount.gsURLGetPasswordPage = ExtractString(PageAddress(cms_getpassword),1,"?")
+      	COL_ManageAccount.gsURLCustomSpacePage = ExtractString(PageAddress(admin_dashboard),1,"?")
+      END
+     type : 196626
+   -
+     type : 196621
+   -
+     type : 196627
+     enabled : false
+  orphans :
+   -
+     name : WW_CMS
+     identifier : 0x4ce64bce0031e524
+     code_elements :
+      type_code : 159
+      p_codes : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : WWGestionContenu
+rad :
+ internal_properties : CAAAAAgAAABhIL0UXeZmxDJxY3Xy0Q==
+project_explorer :
+ explorer_type : project
+ children :
+  -
+    name : Action plans1
+    explorer_type : custom_folder
+resources :
+ string_res :
+  identifier : 0x0
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAAAd98VSJfHHqE3P0QHwrwdhn7ig8dWBR6valpUTgnAMTVXiDg==

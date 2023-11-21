@@ -1,0 +1,263 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : SET_CMS
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x175034a612f9870e
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  type_code : 31
+  p_codes :
+   -
+     code : |1+
+      CONSTANT
+      	// Constants of the possible states for the articles (Article.ArticleStatus item)
+      	ARTICLE_DRAFT = 0
+      	ARTICLE_DRAFT_DESC = "Draft"
+      	ARTICLE_WAIT_FOR_MODERATION = 1
+      	ARTICLE_WAIT_FOR_MODERATION_DESC = "Waiting for moderation"
+      	ARTICLE_PUBLISHED = 2
+      	ARTICLE_PUBLISHED_DESC = "Published"
+      	ARTICLE_ARCHIVED = 3
+      	ARTICLE_ARCHIVED_DESC =  "Archived"
+      	
+      	RPT_ARTICLE_DRAFT = 1
+      	RPT_ARTICLE_WAIT_FOR_MODERATION = 2
+      	RPT_STATUS_ARTICLE_VALIDATED = 3
+      	RPT_ARTICLE_ARCHIVED = 4	
+      	
+      	// ---- Variables for moderating the articles
+      	TPL_EMAIL_CONTENT = [
+      	Hello, 
+      	
+      	The <%1> article was created (on %2) by %3.
+      	
+      	
+      	]
+      	// In this variable, %1 corresponds to the title of the article, %2 corresponds to the modification date of the article and %3 corresponds to the user
+      	
+      	NOTIFICATION_CREATION = [
+      	Hello, 
+      	
+      	An article was created in the <%1> category.
+      	It is the following article: "%2"
+      	
+      	You receive this notification because you have subscribed to the modifications of the %1 category.
+      	]
+      	NOTIFICATION_MODIFICATION = [
+      	Hello, 
+      	
+      	An article was modified in the <%1> category.
+      	It is the following article: "%2"
+      	
+      	You receive this notification because you have subscribed to the modifications of the %1 category.
+      	
+      	]
+      	SUBJECT_NOTIFICATIONS = "Notification of subscription for the <%1> category"
+      	
+      	SUBJECT_PASSWORD = "Retrieving your password"
+      	GET_PWD = [
+      	Hello, 
+      	
+      	You have asked to receive your password by email.
+      	Your connection information is as follows:
+      	User name: <%1>
+      	Password: <%2>
+      	
+      	We advise you to change the password during your next visit to the site.
+      	]
+      	
+      	
+      	// Constants for the names of the rights on the site - these rights are added to the ones defined in the account management
+      	RIGHTS_MODERATOR = "MODERATOR"		// The users who own these rights can moderate the categories whose identifier is the parameter of the rights
+      	// Declare other names of rights if necessary
+      	
+      	// Constants of global parameters of the site - these parameters are stored in the database
+      	CMS_SITE_NAME = "SITE_NAME"
+      	CMS_PUBLIC_URL = "SITE_PUBLIC_URL"
+      	CMS_DESCRIPTION = "SITE_DESCRIPTION"
+      	
+      	CMS_SENDER_MODERATION = "MOD_SENDER"
+      	CMS_EMAIL_MODERATION = "MOD_EMAIL"
+      	CMS_NOTIFICATION_SENDER = "NOTIF_SENDER"
+      	CMS_NOTIFICATION_EMAIL = "NOTIF_EMAIL"
+      	CMS_PASSWORD_SENDER = "PASSWD_SENDER"
+      	CMS_PASSWORD_EMAIL = "PASSWD_EMAIL"
+      	CMS_SMTP_SERVER = "SMTP_SERVER"
+      	CMS_SMTP_PORT = "SMTP_PORT"
+      	CMS_SMTP_USER = "SMTP_USER"
+      	CMS_SMTP_PASSWD = "SMTP_PASSWD"
+      	CMS_SMTP_PROTO = "SMTP_PROTO"
+      		
+      	CMS_MODERATION_ENABLED = "MODERATION"
+      
+      	CMS_TITLE_RSS_STREAM = "RSS_TITLE"
+      	CMS_DESCRIPTION_RSS_STREAM = "RSS_DESCRIPTION"
+      	
+      	// Default image files
+      	DEFAULT_PHOTO = "Person.png"
+      END
+      
+      gbInitCompleted is boolean = False
+      
+      // ---- Variables for presenting the CMS
+      gaaDisplayArr is ASSOCIATIVE ARRAY of strings					// Name of pages for presenting articles
+      
+      // Addresses of pages for building links
+      gsURLMediaPage is string = ExtractString(PageAddress(get_media),1,"?")			// Page for media generation
+      gsURLCategoryPage is string = ExtractString(PageAddress(category),1,"?")
+      gsURLAuthorPage is string = ExtractString(PageAddress(author),1,"?")
+      gsURLAuthorsPage is string = ExtractString(PageAddress(authors),1,"?")
+      gsURLHomePage is string = ExtractString(PageAddress(home),1,"?")
+     type : 720896
+  procedures :
+   -
+     name : bInitCMS
+     procedure_id : 1679900548896818958
+     type_code : 15
+     code : |1-
+      // Summary: Initialize the CMS (the database must be accessible to call this procedure)
+      // Syntax:
+      //[ <Result> = ] bInitCMS ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	boolean: // 	boolean
+      // 			Returns True during the first initialization
+      // 			The caller knows that the variables of the set of procedures have their default values and that they can be replaced
+      // 			Returns False during the other initializations (once the AWP context is re-read)
+      // 			The caller knows that the variables have been re-read in the AWP session
+      //
+      PROCEDURE bInitCMS()
+      
+      DeclareAWPContext(gbInitCompleted)
+      DeclareAWPContext(gaaDisplayArr)
+      
+      // If it is the first initialization (the variables have not been read in the context)
+      IF gbInitCompleted = False THEN
+      	// Declare the rights supported by the site
+      	DeclareRights(RIGHTS_SITEADMIN,"Managing the site")
+      	DeclareRights(RIGHTS_MODERATOR,"Moderator of a category")
+      	
+      	// Build the table of presentation pages
+      	gaaDisplayArr["simple_article"] = ExtractString(PageAddress(simple_article),1,"?")
+      	gaaDisplayArr["article"] = ExtractString(PageAddress(article),1,"?")
+      	gaaDisplayArr[""] = ExtractString(PageAddress(article),1,"?")
+      		
+      	// The initialization is completed
+      	gbInitCompleted = True
+      	
+      	// Returns True during the first initialization
+      	// The caller knows that the variables of the set of procedures have their default values and that they can be replaced
+      	RESULT True
+      END
+      
+      // Returns False during the other initializations (once the AWP context is re-read)
+      // The caller knows that the variables have been re-read in the AWP session
+      RESULT False
+     type : 458752
+   -
+     name : bCallAJAX
+     procedure_id : 1679900548896884494
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bCallAJAX ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	boolean: // 	None
+      //
+      // Example:
+      // Indicate an example.
+      //
+      PROCEDURE bCallAJAX()
+      
+      RESULT (PageParameter("WD_ACTION_")[="AJAX")
+     type : 458752
+   -
+     name : bCallIMAGE
+     procedure_id : 1679900548896950030
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bCallIMAGE ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	boolean: // 	None
+      //
+      // Example:
+      // Indicate an example.
+      //
+      PROCEDURE bCallIMAGE()
+      
+      RESULT PageParameter("WD_ACTION_")="IMAGE"
+     type : 458752
+   -
+     name : ProcessError_Default
+     procedure_id : 1679900548897015566
+     type_code : 15
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      // ProcessError_Default ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      PROCEDURE ProcessError_Default()
+      
+      sMessage is string = "An internal error occurred."+CR+"The manager was informed."+CR+"Retry later."+CR
+      IF InTestMode() THEN
+      	sMessage += ErrorInfo(errFullDetails)
+      END
+      
+      Error(sMessage)
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : COL_ProcéduresGlobales1
+resources :
+ string_res :
+  identifier : 0x1caf48c60510cea7
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+  strings :
+   -
+     text :
+      en-GB : The sought category does not exist.
+     index : 0
+   -
+     text :
+      en-GB : Draft
+     index : 1
+   -
+     text :
+      en-GB : Waiting for moderation
+     index : 2
+   -
+     text :
+      en-GB : Published
+     index : 3
+   -
+     text :
+      en-GB : Archived
+     index : 4
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
+associated_test :
+ name : TEST_CMS.wxt

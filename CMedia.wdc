@@ -1,0 +1,357 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : CMedia
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x160c0003019e29ef
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      CMedia is Class
+      	m_nIDMedia is 8-byte int <mapping=MediaID>
+      	m_sMediaTitle is string ANSI <mapping=MediaTitle>
+      	m_sMediaType is string ANSI <mapping=Media_Type>
+      	m_sMediaFamily is string ANSI <mapping=Family>
+      	m_sDescription is string ANSI <mapping=Description>
+      	m_bufContent is buffer
+      	m_nSize is 8-byte int
+      END
+     type : 131072
+  procedures :
+   -
+     name : Manufacturer
+     procedure_id : 1588644781467052527
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructor()
+      
+     type : 589824
+   -
+     name : Destructor_
+     procedure_id : 1588644781467118063
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructor()
+      
+     type : 655360
+   -
+     name : bLoadInfo
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1588645052056280829
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] bLoadInfo (<nMediaID> is 8-byte int)
+      //
+      // Parameters:
+      //	nMediaID (8-byte integer): <specify the role of nCategoryID>
+      // Return value:
+      // 	boolean: // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE bLoadInfo( LOCAL nIDMedia is 8-byte int )
+      
+      IF HReadSeekFirst(Media,MediaID,nIDMedia) THEN
+      	FileToMemory(object,Media)
+      	m_nSize = Val(ExtractString(HInfoMemo(Media,MediaContent),3))	
+      	RESULT True
+      END
+      
+      RESULT False
+      
+      CASE Error:
+      ErrorPropagate()
+      RESULT False
+     type : 458752
+   -
+     name : ImagePath
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1588645052056346459
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] ImagePath ([<nWidth> is int [, <nHeight> is int]])
+      //
+      // Parameters:
+      //	nWidth (integer - default value=0): <specify the role of nWidth>
+      //	nHeight (integer - default value=0): <specify the role of nHeight>
+      // Return value:
+      // 	ANSI string: // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE ImagePath( nWidth is int = 0, nHeight is int = 0)
+      
+      IF m_nIDMedia=0 THEN
+      	RESULT ""
+      END
+      
+      aaParam is ASSOCIATIVE ARRAY of strings
+      aaParam["id"] = m_nIDMedia
+      IF nWidth<>0 THEN aaParam["width"] = nWidth
+      IF nHeight<>0 THEN aaParam["top"] = nHeight
+      
+      RESULT BuildURL(SET_CMS.gsURLMediaPage,aaParam)
+      
+      CASE Error:
+      ErrorPropagate()
+      RESULT ""
+     type : 458752
+   -
+     name : s_ListMedia
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1588645288286091194
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] s_ListMedia ([<sFilterDescription> is string])
+      //
+      // Parameters:
+      // 	sFilterDescription (ANSI string - default value=""): <specify the role of sFilterDescription>
+      // Return value:
+      // 	table: // None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE PUBLIC GLOBAL s_ListMedia( sFilterDescription is string = "" )
+      
+      arrIDMedia is array of 8-byte int
+      
+      FOR EACH Media
+      	IF sFilterDescription="" _OR_ Position(Media.Description,sFilterDescription,1,IgnoreCase)>0 THEN
+      		Add(arrIDMedia,Media.MediaID)
+      	END
+      END
+      
+      CASE Error:
+      ErrorPropagate()
+      
+      END:
+      RESULT arrIDMedia
+     type : 458752
+   -
+     name : s_ListFamily
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1613900306065649539
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] s_ListFamily ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	table: // None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE GLOBAL s_ListFamily()
+      
+      arrFamily is array of string
+      
+      HExecuteQuery(QRY_ListMediaFamilies)
+      FOR EACH QRY_ListMediaFamilies 
+      	IF QRY_ListMediaFamilies.Family<>"" THEN
+      		Add(arrFamily,QRY_ListMediaFamilies.Family)
+      	END
+      END
+      
+      CASE Error:
+      ErrorPropagate()
+      
+      END:
+      RESULT arrFamily
+      
+     type : 458752
+   -
+     name : s_ListMediaPerFamily
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1613900903072731341
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //[ <Result> = ] s_ListMediaByFamily (<sFamilyName> is string [, <sFilterDescription> is string])
+      //
+      // Parameters:
+      // 	sFamilyName (ANSI string): <specify the role of sFamilyName>
+      // 	sFilterDescription (ANSI string - default value=""): <specify the role of sFilterDescription>
+      // Return value:
+      // 	table: // None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE PUBLIC GLOBAL s_ListMediaPerFamily( sFamilyName is string, sFilterDescription is string = "" )
+      
+      arrIDMedia is array of 8-byte int
+      
+      FOR EACH Media WHERE Family=sFamilyName
+      	IF sFilterDescription="" _OR_ Position(Media.Description,sFilterDescription,1,IgnoreCase)>0 THEN
+      		Add(arrIDMedia,Media.MediaID)
+      	END
+      END
+      
+      CASE Error:
+      ErrorPropagate()
+      
+      END:
+      RESULT arrIDMedia
+      
+     type : 458752
+   -
+     name : s_Delete
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1613904201629943653
+     type_code : 12
+     code : |1+
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //s_Delete (<nMediaID> is 8-byte int)
+      //
+      // Parameters:
+      //	nMediaID (8-byte int): <specify the role of nMediaID>
+      // Return value:
+      // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE GLOBAL s_Delete( nIDMedia is 8-byte int )
+      
+      IF HReadSeekFirst(Media,MediaID,nIDMedia,hLockWrite) THEN
+      	HDelete(Media)
+      END
+      
+      CASE Error:
+      ErrorPropagate()
+     type : 458752
+   -
+     name : Lock
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1613907251069229887
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //Lock ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE Lock()
+      
+      HReadSeekFirst(Media,MediaID,m_nIDMedia,hLockWrite)
+      
+      CASE Error:
+      	ErrorPropagate()
+      	
+     type : 458752
+   -
+     name : Saves
+     internal_properties : CAAAAAgAAABUHz8hVhFi02/J7EhBrMlSNO0MeAqWBppfCjnxm/4kgJdm7XWgB5T6wjMexC1lxpG0E9/miOIxDqpCyq3t86PoLtBkATH/1oB8x09XjEnNP/qUDpwcbSPg0NLupmnY36w8JgJ/5axk6CsPJRVV4Ib+UFiKlFTTIkF739C1c2Up+mtV1Q==
+     procedure_id : 1613907251069426917
+     type_code : 12
+     code : |1-
+      // Summary: <specify the action of the procedure>
+      // Syntax:
+      //Save (<bModifyContent> is boolean)
+      //
+      // Parameters:
+      //	bModifyContent (boolean): <specify the role of bModifyContent>
+      // Return value:
+      // 	None
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      
+      PROCEDURE Saves( bModifyContent is boolean )
+      
+      IF m_nIDMedia=0 THEN
+      	HReset(Media)
+      END
+      
+      MemoryToFile(object,Media)
+      IF bModifyContent THEN
+      	Media.MediaContent = m_bufContent
+      END
+      
+      IF m_nIDMedia=0 THEN
+      	HAdd(Media)
+      	m_nIDMedia = Media.MediaID
+      ELSE
+      	HModify(Media)
+      END
+      
+      CASE Error:
+      	ErrorPropagate()
+      	
+     type : 458752
+  properties :
+   -
+     name : p_ImagePath
+     identifier : 0x160c1067056f2fa5
+     type_code : 103
+     p_codes :
+      -
+        code : |1+
+         PROCEDURE PUBLIC p_ImagePath()
+         
+         RESULT ImagePath()
+        type : 1966080
+     template_refs : []
+   -
+     name : p_Size_
+     identifier : 0x1665c07b10ab20c6
+     type_code : 103
+     p_codes :
+      -
+        code : |1+
+         PROCEDURE PUBLIC p_Size_()
+         
+         RESULT m_nSize
+        type : 1966080
+     template_refs : []
+   -
+     name : p_Content
+     identifier : 0x1666ae9105cf27cf
+     type_code : 103
+     p_codes :
+      -
+        code : |1-
+         PROCEDURE PUBLIC p_Content()
+         
+         RESULT m_bufContent
+        type : 1966080
+      -
+        code : |1-
+         PROCEDURE PUBLIC p_Content(Value)
+         
+         m_bufContent = Value
+        type : 2031616
+     template_refs : []
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x100696f80de4e5e5
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
